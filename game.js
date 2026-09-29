@@ -686,7 +686,7 @@ var DARK_UNLOCK = 2000;
 var SHOP_SLOT3_COST = 200;
 var SHOP_KATANA_COST = 500;
 var SHOP_LUCKY_COST = 1500;
-var SHOP_TOU_COST = 0;                 /* TOUx1 — ตั้งราคาได้ตามใจ */
+var SHOP_TOU_COST = 0;
 var KATANA_DMG = 0.4;
 var KATANA_CD = 0.2;
 var KATANA_RANGE = R*5;
@@ -695,14 +695,12 @@ var LUCKY_CARD_DMG = 3;
 var ENDLESS_MAX_BOTS = 28;
 var ENDLESS_INTRO_TIME = 2.2;
 var ENDLESS_CLEAR_TIME = 2.8;
-/* ★ เทพจากคอมโบ แสง+ลูกน้อง */
 var GOD_MINION_HP = 15;
 var GOD_MINION_DMG = 5;
 var GOD_MINION_CD = 5;
 var guestSuckPress = 0;
 var MINION_ID = 0;
 
-/* ================= เอฟเฟคพื้นหลัง ================= */
 (function bgFx(){
   var cv=$('bgfx'),cx=cv.getContext('2d'),P=[];
   function rs(){cv.width=innerWidth;cv.height=innerHeight}
@@ -824,7 +822,7 @@ function getCombo(skills){
    if(s1==='light'&& s2==='stone') return 'lightStone';
    if(s1==='lightning' && s2==='stone') return 'lightningStone';
    if(s1==='dark' && s2==='ice') return 'timeStop';
-   if(s1==='light' && s2==='pet') return 'lightPet';   /* ★ NEW */
+   if(s1==='light' && s2==='pet') return 'lightPet';
   }
  }
  return null;
@@ -858,7 +856,7 @@ function loadImg(src){return new Promise(function(r){
  if(!src){r(null);return;}
  var im=new Image();im.onload=function(){r(im);};im.onerror=function(){r(null);};im.src=src;});}
 
-/* ================= Account / Profile ================= */
+/* ===== Account / Profile ===== */
 var ACC = loadAccount();
 function loadAccount(){
  try{var a=JSON.parse(localStorage.getItem('circ_account')||'null');
@@ -886,7 +884,6 @@ function submitAccount(name, keypass, avatar){
   .then(function(r){return r.json();});
 }
 
-/* ================= Leaderboard helpers ================= */
 function loadWinsMap(){
  try{var m=JSON.parse(localStorage.getItem('circ_wins_map')||'{}');
   if(!m||typeof m!=='object'||Array.isArray(m))return {};
@@ -930,7 +927,7 @@ function syncWinsToServer(){
  a.forEach(function(c){ if(c && c.wins>0) submitWin(c.name, c.wins); });
 }
 
-/* ================= ร้านค้า ================= */
+/* ===== ร้านค้า ===== */
 function getShop(){
  try{
   var s=JSON.parse(localStorage.getItem('circ_shop')||'{}');
@@ -944,7 +941,6 @@ function hasSlot3(){return !!getShop().slot3;}
 function hasLucky(){return !!getShop().lucky;}
 function isAdmin(){return !!getShop().tou;}
 
-/* ★ Admin config ต่อผู้เล่น */
 function getAdminCfg(){
  try{
   var c=JSON.parse(localStorage.getItem('circ_admin')||'{}');
@@ -1022,7 +1018,6 @@ $('tileShop').onclick=function(){
 };
 $('shopBack').onclick=function(){show('menu');};
 
-/* ================= sanitize ================= */
 function sanitize(c){
  if(!c||typeof c!=='object')return null;
  var rawWins=Number(c.wins);
@@ -1040,7 +1035,6 @@ function sanitize(c){
   o._isEndlessBot = true;
   o._botVariant = Math.max(0, Math.min(9, Math.floor(Number(c._botVariant)||0)));
  }
- /* ★ admin fields */
  if(c._adminHp) o._adminHp = Math.max(1, Math.min(99999, Math.floor(Number(c._adminHp))));
  if(c._adminCdMult) o._adminCdMult = Math.max(0.01, Math.min(10, Number(c._adminCdMult)));
  if(c._adminAllSkills) o._adminAllSkills = true;
@@ -1055,14 +1049,13 @@ function sanitize(c){
  (Array.isArray(c.frames)?c.frames:[]).slice(0,8).forEach(function(f){
   if(typeof f==='string'&&f.indexOf('data:image/png;base64,')===0&&f.length<MAXF)o.frames.push(f);});
  if(!o.frames.length)o.frames.push(blankFrame());
- /* ★ admin ปลดล็อกสกิลไม่จำกัด / มืดใช้ได้ */
  var adminUnlock = !!c._adminAllSkills;
  var maxSk = c._isBoss ? 4 : (adminUnlock ? 999 : (hasSlot3() ? 3 : 2));
  var seen={};
  (Array.isArray(c.skills)?c.skills:[]).forEach(function(s){
   if(!s||!SK[s.id]||seen[s.id]||o.skills.length>=maxSk)return;
   if(s.id==='dark' && !c._isBoss && !adminUnlock && o.wins < DARK_UNLOCK) return;
-  if(s.id==='god') return; /* ★ สกิลเทพไม่ให้ผู้เล่นเลือกเอง */
+  if(s.id==='god') return;
   seen[s.id]=1;
   var slots={cast:[],status:[]};
   ['cast','status'].forEach(function(slot){
@@ -1234,7 +1227,7 @@ $('tileRank').onclick=function(){show('rank');loadRank();};
 $('rankRefresh').onclick=loadRank;
 $('rankBack').onclick=function(){show('menu');};
 
-/* ================= Admin screen ================= */
+/* ===== Admin screen ===== */
 $('tileAdmin').onclick=function(){
  if(!isAdmin()){toast('ต้องซื้อ TOUx1 ก่อน');return;}
  openAdmin();
@@ -1242,7 +1235,6 @@ $('tileAdmin').onclick=function(){
 $('adminBack').onclick=function(){show('menu');renderProfileCard();};
 
 function openAdmin(){
- /* current HP of active char */
  var c = CH[ACT];
  $('admHpInput').value = (c && c._adminHp) ? c._adminHp : (c ? 100 : 500);
  $('admWinsInput').value = 1000;
@@ -1282,7 +1274,6 @@ $('admAddWins').onclick=function(){
   ACC.wins = newTot;
   saveAccountLocal(ACC);
  }
- /* apply to active char too */
  var a = getChars();
  if(a[ACT]){ a[ACT].wins = newTot; setStore(a); }
  submitWin(name, newTot);
@@ -1319,7 +1310,7 @@ $('admSetHp').onclick=function(){
 };
 $('admAllSkills').onclick=function(){
  if(!CH[ACT]){toast('สร้างตัวละครก่อน');return;}
- var allIds = Object.keys(SK).filter(function(id){return id!=='pet'?'true':id!=='pet' && id!=='god';}).filter(function(id){return id!=='god' && id!=='bossSummon';});
+ var allIds = Object.keys(SK).filter(function(id){return id!=='god' && id!=='bossSummon';});
  var skills = allIds.map(function(id){ return defSkill(id); });
  var a = getChars();
  a[ACT].skills = skills;
@@ -1346,7 +1337,7 @@ $('admReset').onclick=function(){
  loadChars().then(function(){toast('↻ รีเซ็ตแล้ว');openAdmin();});
 };
 
-/* ================= ปุ่มเมนู ================= */
+/* ===== ปุ่มเมนู ===== */
 $('tileChars').onclick=function(){ show('chars'); };
 $('charsBack').onclick=function(){show('menu');drawStaticPreviews();};
 $('tilePlay').onclick=function(){ show('play'); renderRooms(); };
@@ -1361,7 +1352,7 @@ $('profileCard').onclick=function(){ openSettings(); };
 $('tileSettings').onclick=function(){ openSettings(); };
 $('settingsBack').onclick=function(){ show('menu'); renderProfileCard(); };
 
-/* ================= ตัวแก้ไขตัวละคร ================= */
+/* ===== ตัวแก้ไขตัวละคร ===== */
 var dc=$('dc'),dx=dc.getContext('2d'),ED=null,tool='brush',playT=null;
 function activeFrames(){return ED.editingMinion?ED.minionFrames:ED.frames;}
 function activeCur(){return ED.editingMinion?ED.minionCur:ED.cur;}
@@ -1472,7 +1463,7 @@ function renderSkPick(){
  var adminUser = isAdmin();
  Object.keys(SK).forEach(function(id){
   if(id==='bossSummon') return;
-  if(id==='god') return; /* ★ สกิลเทพ มาจากคอมโบเท่านั้น */
+  if(id==='god') return;
   var on=ED.skills.some(function(s){return s.id===id});
   var isBossEdit = !!(CH[ED.slot] && CH[ED.slot]._isBoss);
   var locked = (id==='dark') && !isBossEdit && !adminUser && wins < DARK_UNLOCK;
@@ -1483,8 +1474,7 @@ function renderSkPick(){
  });
  $('skpick').innerHTML=h;
  var maxSk = adminUser ? 999 : (hasSlot3() ? 3 : 2);
- $('skMax').textContent = adminUser ? ('∞ (แอดมิน)' : maxSk);
- /* show all-skills button */
+ $('skMax').textContent = adminUser ? '∞ (แอดมิน)' : maxSk;
  var allBtn = $('btnAllSkillsEdit');
  if(allBtn) allBtn.style.display = adminUser ? 'flex' : 'none';
  var g='';
@@ -1556,7 +1546,6 @@ $('skpick').addEventListener('click',function(e){
 $('btnAllSkillsEdit').onclick=function(){
  if(!isAdmin()){toast('เฉพาะแอดมิน');return;}
  var allIds = Object.keys(SK).filter(function(id){return id!=='god' && id!=='bossSummon';});
- /* clear and add all */
  ED.skills = allIds.map(function(id){ return defSkill(id); });
  renderSkPick();
  toast('✦ ใส่ทุกสกิล ('+ED.skills.length+')');
@@ -1634,7 +1623,6 @@ function openEditor(slot){
  if(!ED.minionFrames.length) ED.minionFrames=[newCanvas()];
  ED.editingMinion=false;
  $('minionHint').style.display='none';
- /* ★ admin fields */
  if(isAdmin()){
   $('adminEditorFields').style.display='block';
   $('admCharHp').value = (c && c._adminHp) ? c._adminHp : 100;
@@ -1674,7 +1662,6 @@ $('btnSave').onclick=function(){
  if(ED.skills.some(function(s){return s.id==='pet';})){
   obj.minion = {frames: ED.minionFrames.map(function(c){return c.toDataURL('image/png');})};
  }
- /* ★ admin fields */
  if(adminUser){
   var hp = Math.max(1, Math.min(99999, Math.floor(Number($('admCharHp').value)||100)));
   var cd = clamp(Number($('admCharCd').value)||1, 0.01, 10);
@@ -1682,7 +1669,6 @@ $('btnSave').onclick=function(){
   obj._adminCdMult = cd;
   if(ED.skills.length > 2) obj._adminAllSkills = true;
  } else {
-  /* preserve existing admin flags if they existed (prevent losing them) */
   if(freshOld && freshOld._adminHp) obj._adminHp = freshOld._adminHp;
   if(freshOld && freshOld._adminCdMult) obj._adminCdMult = freshOld._adminCdMult;
   if(freshOld && freshOld._adminAllSkills) obj._adminAllSkills = true;
@@ -1696,7 +1682,7 @@ $('btnSave').onclick=function(){
 };
 $('btnBack').onclick=function(){stopPlay();show('chars');drawStaticPreviews();};
 
-/* ================= Skill Effect Editor ================= */
+/* ===== Skill Effect Editor ===== */
 var EF=null,efTool='brush',efDown=false,efLx=0,efLy=0;
 function openSkEffect(skIdx,slot){
  var s=ED.skills[skIdx];
@@ -1877,7 +1863,7 @@ $('efSave').onclick=function(){
 };
 $('efBack').onclick=function(){show('editor');renderSkPick();};
 
-/* ================= การต่อสู้ ================= */
+/* ===== การต่อสู้ ===== */
 var bc=$('bc'),ctx=bc.getContext('2d');
 var B=null,mode='bot',role='host',raf=0,lastT=0,sendT=0,ws=null,olState=0,pingT=null;
 var myName='';
@@ -1885,7 +1871,6 @@ var wasOnlineGame=false;
 var selectedBossType = 'mixed';
 var luckyRollReward = null;
 
-/* ================= Room system ================= */
 var currentRoomId = null;
 var selectedRoomMode = 'normal';
 var selectedRoomSize = 2;
@@ -2114,7 +2099,7 @@ function closeWs(notify){
  currentRoomId=null;
 }
 
-/* ================= Settings ================= */
+/* ===== Settings ===== */
 function openSettings(){
  $('setName').value = ACC && ACC.name || '';
  $('setKey').value = ACC && ACC.keypass || '';
@@ -2201,7 +2186,7 @@ $('btnRecover').onclick=function(){
   });
 };
 
-/* ================= ต่อสู้ ================= */
+/* ===== ต่อสู้ ===== */
 function spawnPositions(n){
  var cx=W/2,cy=H/2;
  var radius=Math.min(W,H)*0.35;
@@ -2219,7 +2204,6 @@ function spawnPositions(n){
 }
 function mk(c,pos,index){
  var baseHp = c._hp || 100;
- /* ★ Admin HP override (เฉพาะตัวละครไม่ใช่บอส/บอท) */
  if(!c._isBoss && !c._isEndlessBot && c._adminHp) baseHp = c._adminHp;
  var p = {c:c,index:index,alive:true,
   x:pos.x,y:pos.y,vx:pos.vx,vy:pos.vy,hp:baseHp,maxHp:baseHp,
@@ -2237,7 +2221,7 @@ function mk(c,pos,index){
   flash:0,say:0,sayT:0,
   weaponCd:0,swingT:0,swingAng:0,
   luckyCd:0,
-  lightPetCd:0,          /* ★ คูลดาวน์เทพ จากคอมโบ แสง+สัตว์เลี้ยง */
+  lightPetCd:0,
   reserved:false,
   tx:undefined,ty:undefined};
  if(c._isBoss){
@@ -2384,7 +2368,6 @@ function hurtMinion(m, n, color){
   m.alive = false;
   burst(m.x, m.y, m.color||'#ff88cc', 16, 1.6);
   burst(m.x, m.y, '#ffffff', 8, 1.8);
-  /* ★ ถ้าเป็นเทพ ให้ตั้ง CD ที่เจ้าของ */
   if(m.isGodMinion){
    var owner = B.players[m.owner];
    if(owner) owner.lightPetCd = GOD_MINION_CD;
@@ -2580,12 +2563,9 @@ function castWaterWave(f, k, target, imgsCast, imgsStatus){
   hitSet:{}, pushForce: WATER_PUSH
  });
 }
-/* ★ NEW: เทพจากคอมโบ แสง+สัตว์เลี้ยง */
 function castLightPet(f, k, target, imgsCast, imgsStatus){
  if(!B.minions) B.minions = [];
- /* ลบเทพเก่าของเจ้าของถ้ามี */
  B.minions = B.minions.filter(function(m){ return !(m.owner === f.index && m.isGodMinion); });
- /* ลบลูกน้องเก่า 5 ตัว (pet เดิม) ถ้ามี เพื่อไม่ให้ซ้อน */
  var ang = Math.random()*Math.PI*2;
  var dist = f.r + 50;
  B.minions.push({
@@ -2718,7 +2698,6 @@ function updMinions(dt){
   if(!target){ m.vx *= 0.9; m.vy *= 0.9; m.x += m.vx*dt; m.y += m.vy*dt; return true; }
   m.flash = Math.max(0, m.flash - dt*4);
 
-  /* ★ เทพจากคอมโบ แสง+สัตว์เลี้ยง */
   if(m.isGodMinion){
    var aG = Math.atan2(target.y-m.y, target.x-m.x);
    var dG = Math.hypot(target.x-m.x, target.y-m.y);
@@ -2878,7 +2857,6 @@ function cast(f,k){
   castExplosiveDash(f, k, target);
   return;
  }
- /* ★ NEW: คอมโบ แสง + สัตว์เลี้ยง = เทพ */
  if(combo === 'lightPet' && (s.id === 'light' || s.id === 'pet')){
   if(f.lightPetCd > 0) return 1;
   if(!target) return;
@@ -3210,7 +3188,6 @@ function useWeapon(f,dt){
   });
  }
 }
-/* ★ Endless: บอสกระเด็นไปมาแบบบิลเลียด */
 function endlessBotAI(f, dt){
  if(f.dash>0 || f.bouncing || f.stunLeft>0 || f.lightStunLeft>0) return;
  if(f.c && f.c._isBoss){
@@ -3259,7 +3236,6 @@ function updOnePlayer(f,dt){
  }
  if(f.dash<=0 && f.dashCombo && f.dashCombo !== 'bossDash') f.dashCombo = null;
  if(f.bossDashActive && f.dash <= 0) f.bossDashActive = false;
- /* ★ ลดคูลดาวน์เทพ */
  if(f.lightPetCd > 0) f.lightPetCd = Math.max(0, f.lightPetCd - dt);
 
  if(f.c._isBoss && mode==='boss' && !f.rageActive && f.hp <= f.maxHp*BOSS_RAGE_THRESHOLD){
@@ -3443,7 +3419,6 @@ function updOnePlayer(f,dt){
 
  if(f.lightStunLeft <= 0){
   useWeapon(f,dt);
-  /* ★ admin CD multiplier */
   var adminCdMult = f.c._adminCdMult || 1;
   if(f.c._isBoss && f.rageActive){
    f.rageCastTimer -= dt;
@@ -3463,7 +3438,6 @@ function updOnePlayer(f,dt){
      else {
       var cdOverride = cast(f,k);
       var finalCd = (typeof cdOverride === 'number') ? cdOverride : f.c.skills[k].cd;
-      /* ★ apply admin CD multiplier */
       if(!f.c._isBoss && !f.c._isEndlessBot && adminCdMult !== 1){
        finalCd *= adminCdMult;
       }
@@ -3684,7 +3658,6 @@ function makeEndlessBot(waveNum, variantIdx, isMiniBoss, isBoss){
   var s1 = skillPool[Math.floor(Math.random()*skillPool.length)];
   var s2 = skillPool[Math.floor(Math.random()*skillPool.length)];
   if(s1===s2) s2 = skillPool[(skillPool.indexOf(s1)+1)%skillPool.length];
-  /* ★ ลด HP มินิบอส จาก 100 → 50 */
   var miniHp = 50 + waveNum * 12;
   return {
    name: '⭐ มินิบอส W'+waveNum,
@@ -4700,7 +4673,7 @@ function applyState(s){
  }
 }
 
-/* ================= Drawing ================= */
+/* ===== Drawing ===== */
 function drawBiteZone(z, prog){
  var snap = Math.sin(prog*Math.PI);
  var openAng = 0.65*(1-snap)+0.05;
@@ -5120,11 +5093,9 @@ function drawMinion(m){
  if(!m.alive) return;
  var rr = m.r;
  var im = m.imgs && m.imgs[0];
- /* ★ เทพ - วาดพิเศษ */
  if(m.isGodMinion){
   var tnow = performance.now();
   ctx.save();
-  /* aura */
   var aPulse = 1 + Math.sin(tnow/120)*0.15;
   var aura = ctx.createRadialGradient(m.x, m.y, 2, m.x, m.y, rr*2*aPulse);
   aura.addColorStop(0, 'rgba(255,245,192,0.75)');
@@ -5132,23 +5103,19 @@ function drawMinion(m){
   aura.addColorStop(1, 'rgba(255,200,50,0)');
   ctx.fillStyle = aura;
   ctx.beginPath(); ctx.arc(m.x, m.y, rr*2*aPulse, 0, 7); ctx.fill();
-  /* body */
   ctx.fillStyle = '#fff5c0';
   ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 22;
   ctx.beginPath(); ctx.arc(m.x, m.y, rr, 0, 7); ctx.fill();
   ctx.shadowBlur = 0;
-  /* face */
   ctx.fillStyle = '#3a2a00';
   ctx.beginPath(); ctx.arc(m.x - rr*0.28, m.y - rr*0.15, rr*0.11, 0, 7); ctx.fill();
   ctx.beginPath(); ctx.arc(m.x + rr*0.28, m.y - rr*0.15, rr*0.11, 0, 7); ctx.fill();
-  /* halo */
   ctx.strokeStyle = '#ffd166'; ctx.lineWidth = 2.5;
   ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 16;
   ctx.beginPath();
   ctx.ellipse(m.x, m.y - rr*1.15, rr*0.55, rr*0.16, 0, 0, 7);
   ctx.stroke();
   ctx.shadowBlur = 0;
-  /* HP bar */
   var hpPct = Math.max(0, Math.min(1, m.hp/m.maxHp));
   var barW = rr*2.4;
   ctx.fillStyle = 'rgba(0,0,0,0.6)';
@@ -5708,7 +5675,6 @@ function drawF(f){
   ctx.restore();
  }
 
- /* ★ admin aura */
  if(f.c._adminHp || f.c._adminAllSkills){
   ctx.save();
   ctx.globalAlpha = 0.5 + Math.sin(performance.now()/180)*0.15;
@@ -6021,7 +5987,6 @@ function finish(){
    if(mode==='online') addWin = WIN_ONLINE;
    else if(mode==='boss'){
     var bossP2 = findBoss();
-    /* ★ บอสรวมธาตุ = 100 ชนะ */
     var isMixed = bossP2 && bossP2.c._bossType === 'mixed';
     addWin = isMixed ? WIN_BOSS_MIXED : WIN_BOSS;
    } else addWin = WIN_BOT;
@@ -6393,7 +6358,6 @@ function updateSuckUI(){
  $('suckTime').textContent = Math.max(0, boss.suckTimer||0).toFixed(1) + ' วิ';
 }
 
-/* ★ การ์ดโชค */
 var LUCKY_POOL = null;
 function getLuckyPool(){
  if(LUCKY_POOL) return LUCKY_POOL;
@@ -6484,14 +6448,29 @@ loadChars().then(function(){ syncWinsToServer(); });
 })();
 </script></body></html>`;
 
-// ---------------- SERVER ----------------
-const clients = new Set();
+// ================= SERVER =================
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+const ACC_FILE = process.env.DATA_FILE || path.join(DATA_DIR, 'accounts.json');
+try {
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  console.log('📁 โฟลเดอร์ข้อมูล: ' + DATA_DIR);
+  console.log('📄 ไฟล์บัญชี:     ' + ACC_FILE);
+} catch (e) {
+  console.error('❌ สร้างโฟลเดอร์ข้อมูลไม่สำเร็จ:', e.message);
+  console.error('   → ลองตั้ง env DATA_DIR ไปที่โฟลเดอร์ที่เขียนได้');
+}
 
+const clients = new Set();
 const accounts = new Map();
-const ACC_FILE = path.join(__dirname, 'accounts.json');
+
 function loadAcc() {
   try {
-    const arr = JSON.parse(fs.readFileSync(ACC_FILE, 'utf8'));
+    if (!fs.existsSync(ACC_FILE)) {
+      console.log('ℹ  ยังไม่มีไฟล์บัญชี — เริ่มต้นใหม่');
+      return;
+    }
+    const raw = fs.readFileSync(ACC_FILE, 'utf8');
+    const arr = JSON.parse(raw);
     if (Array.isArray(arr)) {
       arr.forEach(a => {
         if (a && typeof a.name === 'string' && a.name.length <= 12) {
@@ -6504,31 +6483,61 @@ function loadAcc() {
         }
       });
     }
+    console.log('✓ โหลดบัญชี ' + accounts.size + ' รายการ');
+  } catch (e) {
+    console.error('❌ โหลดบัญชีไม่สำเร็จ:', e.message);
+    try {
+      const bak = ACC_FILE + '.bak';
+      if (fs.existsSync(bak)) {
+        const arr = JSON.parse(fs.readFileSync(bak, 'utf8'));
+        if (Array.isArray(arr)) {
+          arr.forEach(a => {
+            if (a && typeof a.name === 'string') {
+              accounts.set(a.name, {
+                name: a.name,
+                keypass: typeof a.keypass === 'string' ? a.keypass : '',
+                avatar: typeof a.avatar === 'string' ? a.avatar : '',
+                wins: Math.max(0, Math.floor(Number(a.wins) || 0))
+              });
+            }
+          });
+          console.log('✓ กู้คืนจาก backup ' + accounts.size + ' รายการ');
+        }
+      }
+    } catch (e2) { console.error('   กู้ backup ไม่ได้:', e2.message); }
+  }
+}
+
+let saveTimer = null;
+function writeAccSync() {
+  const arr = [...accounts.values()].map(a => ({
+    name: a.name, keypass: a.keypass, avatar: a.avatar, wins: a.wins
+  }));
+  const tmp = ACC_FILE + '.tmp';
+  fs.writeFileSync(tmp, JSON.stringify(arr, null, 2));
+  try {
+    if (fs.existsSync(ACC_FILE)) fs.copyFileSync(ACC_FILE, ACC_FILE + '.bak');
   } catch (e) {}
+  fs.renameSync(tmp, ACC_FILE);
 }
 function saveAcc() {
-  try {
-    const arr = [...accounts.values()].map(a => ({
-      name: a.name, keypass: a.keypass, avatar: a.avatar, wins: a.wins
-    }));
-    fs.writeFileSync(ACC_FILE, JSON.stringify(arr));
-  } catch (e) {}
+  if (saveTimer) return;
+  saveTimer = setTimeout(() => {
+    saveTimer = null;
+    try { writeAccSync(); }
+    catch (e) { console.error('❌ บันทึกบัญชีไม่สำเร็จ:', e.message); }
+  }, 400);
 }
 loadAcc();
 
 const rooms = new Map();
 let roomIdCounter = 0;
-function makeRoomId() {
-  return 'r' + (++roomIdCounter) + '_' + Date.now().toString(36);
-}
+function makeRoomId() { return 'r' + (++roomIdCounter) + '_' + Date.now().toString(36); }
 function roomSummary(r) {
   const host = r.chars[0] || { name: '?' };
   const avatar = (host.frames && host.frames[0]) ? host.frames[0] : '';
   return {
-    id: r.id,
-    mode: r.mode,
-    size: r.size,
-    count: r.clients.length,
+    id: r.id, mode: r.mode, size: r.size, count: r.clients.length,
     host: {
       name: String(host.name || '?').slice(0, 12),
       avatar: avatar,
@@ -6546,16 +6555,10 @@ function removeFromRoom(c) {
   c.roomId = null;
   if (!r) return;
   const idx = r.clients.indexOf(c);
-  if (idx >= 0) {
-    r.clients.splice(idx, 1);
-    r.chars.splice(idx, 1);
-  }
-  if (r.clients.length === 0) {
-    rooms.delete(r.id);
-  }
+  if (idx >= 0) { r.clients.splice(idx, 1); r.chars.splice(idx, 1); }
+  if (r.clients.length === 0) rooms.delete(r.id);
   broadcastRooms();
 }
-
 function leaderboardList() {
   return [...accounts.values()]
     .filter(a => a.wins > 0)
@@ -6568,10 +6571,7 @@ function addWin(name, amount) {
   if (!name) return;
   amount = Math.max(1, Math.floor(Number(amount) || 1));
   let acc = accounts.get(name);
-  if (!acc) {
-    acc = { name, keypass: '', avatar: '', wins: 0 };
-    accounts.set(name, acc);
-  }
+  if (!acc) { acc = { name, keypass: '', avatar: '', wins: 0 }; accounts.set(name, acc); }
   acc.wins = (acc.wins || 0) + amount;
   saveAcc();
 }
@@ -6580,19 +6580,14 @@ function setWinTotal(name, total) {
   total = Math.max(0, Math.floor(Number(total) || 0));
   if (!name || total <= 0) return;
   let acc = accounts.get(name);
-  if (!acc) {
-    acc = { name, keypass: '', avatar: '', wins: 0 };
-    accounts.set(name, acc);
-  }
-  if (total > (acc.wins || 0)) acc.wins = total;
-  saveAcc();
+  if (!acc) { acc = { name, keypass: '', avatar: '', wins: 0 }; accounts.set(name, acc); }
+  if (total > (acc.wins || 0)) { acc.wins = total; saveAcc(); }
 }
-
 function frame(op, data) {
   const p = Buffer.isBuffer(data) ? data : Buffer.from(data);
   const n = p.length;
   let h;
-  if (n < 126) { h = Buffer.from([0x80 | op, n]); }
+  if (n < 126) h = Buffer.from([0x80 | op, n]);
   else if (n < 65536) { h = Buffer.alloc(4); h[0] = 0x80 | op; h[1] = 126; h.writeUInt16BE(n, 2); }
   else { h = Buffer.alloc(10); h[0] = 0x80 | op; h[1] = 127; h.writeBigUInt64BE(BigInt(n), 2); }
   return Buffer.concat([h, p]);
@@ -6624,13 +6619,8 @@ function onMsg(c, txt) {
     const size = Math.max(2, Math.min(5, parseInt(d.size) || 2));
     removeFromRoom(c);
     const id = makeRoomId();
-    const r = {
-      id, mode, size,
-      clients: [c],
-      chars: [d.char],
-      boss: mode === 'boss' ? d.boss : null,
-      createdAt: Date.now()
-    };
+    const r = { id, mode, size, clients: [c], chars: [d.char],
+      boss: mode === 'boss' ? d.boss : null, createdAt: Date.now() };
     rooms.set(id, r);
     c.roomId = id;
     send(c, { type: 'roomCreated', id, size, mode });
@@ -6701,6 +6691,15 @@ const server = http.createServer((req, res) => {
   if (req.method === 'GET' && u.pathname === '/rooms') {
     res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
     return res.end(JSON.stringify([...rooms.values()].map(roomSummary)));
+  }
+  if (req.method === 'GET' && u.pathname === '/debug/accounts') {
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+    return res.end(JSON.stringify({
+      count: accounts.size,
+      dataDir: DATA_DIR,
+      accFile: ACC_FILE,
+      exists: fs.existsSync(ACC_FILE)
+    }));
   }
   if (req.method === 'POST' && u.pathname === '/account') {
     let body = '';
@@ -6844,6 +6843,15 @@ server.on('upgrade', (req, socket) => {
   });
 });
 
+function gracefulExit(sig) {
+  console.log('\n⏹  ได้รับ ' + sig + ' — กำลังบันทึกข้อมูล...');
+  try { writeAccSync(); console.log('✓ บันทึก ' + accounts.size + ' บัญชีเรียบร้อย'); }
+  catch (e) { console.error('❌ บันทึกไม่สำเร็จ:', e.message); }
+  process.exit(0);
+}
+process.on('SIGINT', () => gracefulExit('SIGINT'));
+process.on('SIGTERM', () => gracefulExit('SIGTERM'));
+
 server.listen(PORT, '0.0.0.0', () => {
   console.log('🎮 เกมพร้อมแล้ว!  พอร์ต ' + PORT);
   console.log('   เครื่องนี้ : http://localhost:' + PORT);
@@ -6852,4 +6860,8 @@ server.listen(PORT, '0.0.0.0', () => {
     if (i.family === 'IPv4' && !i.internal) console.log('   วงเดียวกัน : http://' + i.address + ':' + PORT);
   }));
   console.log('   👉 จะให้คนทั่วโลกเล่น: cloudflared tunnel --url http://localhost:' + PORT);
+  console.log('');
+  console.log('📌 ข้อมูลบัญชีเก็บที่: ' + ACC_FILE);
+  console.log('📌 อย่าลบโฟลเดอร์ data/ ตอนอัปเดต!');
+  console.log('📌 ตรวจสอบ: http://localhost:' + PORT + '/debug/accounts');
 });
