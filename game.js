@@ -49,13 +49,13 @@ button.warn{background:#1a1408;border-color:#4a4020;color:#e8c880}
 button.num{padding:14px 18px;font-size:20px;font-weight:600;min-width:56px;
   background:#141414;border-color:#2a2a2a}
 button.num:hover{background:#1e1e1e;border-color:#fff}
-input[type=text],input[type=password]{width:100%;padding:12px 14px;border-radius:10px;
-  border:1px solid #2a2a2a;background:#0f0f0f;color:#fff;font-size:15px;font-family:inherit;
-  transition:border-color .15s,box-shadow .15s;letter-spacing:.05em}
-input[type=text]:focus,input[type=password]:focus{outline:0;border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.1)}
+input[type=text],input[type=password],input[type=number]{width:100%;padding:12px 14px;
+  border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#fff;font-size:15px;
+  font-family:inherit;transition:border-color .15s,box-shadow .15s;letter-spacing:.05em}
+input[type=text]:focus,input[type=password]:focus,input[type=number]:focus{
+  outline:0;border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.1)}
 input[type=text]::placeholder,input[type=password]::placeholder{color:#555;letter-spacing:0}
 
-/* Profile card */
 .profile-card{display:flex;align-items:center;gap:14px;padding:14px;
   background:linear-gradient(135deg,#0f0f0f 0%,#050505 100%);
   border:1px solid #2a2a2a;border-radius:16px;margin:12px 0 18px;cursor:pointer;
@@ -73,7 +73,6 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
 .profile-card .pwin-badge{color:#fff;font-weight:700}
 .profile-card .arrow{color:#555;font-size:18px;flex-shrink:0}
 
-/* Menu grid */
 .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
 .menu-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:10px;padding:26px 12px;background:#0f0f0f;border:1px solid #2a2a2a;border-radius:16px;
@@ -89,8 +88,10 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
 .menu-tile span{font-size:12px;font-weight:600;letter-spacing:.18em;color:#ccc;
   text-transform:uppercase}
 .menu-tile.wide{grid-column:span 2}
+.menu-tile.admin{border-color:#ffd166;color:#ffd166}
+.menu-tile.admin:hover{border-color:#ffd166;box-shadow:0 0 24px rgba(255,209,102,.3)}
+.menu-tile.admin span{color:#ffd166}
 
-/* Card slots */
 .card{display:flex;align-items:center;gap:12px;background:#0f0f0f;border:1px solid #222;
   border-radius:14px;padding:12px;margin:10px 0;min-height:100px;
   transition:border-color .15s,box-shadow .15s;position:relative}
@@ -146,6 +147,7 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
 .tag{display:inline-block;padding:1px 8px;border-radius:8px;font-size:10px;
   background:#1a1a1a;border:1px solid #333;margin-left:4px;vertical-align:middle;color:#aaa;
   letter-spacing:.05em}
+.tag.admin{background:#2a1a00;border-color:#ffd166;color:#ffd166}
 .skef-wrap{position:relative;width:256px;height:256px;margin:14px auto;
   background:#0a0a0a;border:1px solid #333;border-radius:12px;overflow:hidden;
   background-image:linear-gradient(#ffffff08 1px,transparent 1px),
@@ -219,6 +221,8 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
   box-shadow:0 0 12px rgba(255,255,255,.25);margin:4px 0;letter-spacing:.05em}
 .combo-tag.ts{background:linear-gradient(90deg,#8a4aff,#7fdcff);color:#fff;
   box-shadow:0 0 14px rgba(138,74,255,.5)}
+.combo-tag.lp{background:linear-gradient(90deg,#fff5c0,#ff88cc);color:#1a0e05;
+  box-shadow:0 0 14px rgba(255,200,140,.5)}
 #btnMinionEdit{display:none;background:#141414;border-color:#555}
 #minionHint{display:none;text-align:center;font-size:12px;color:#ccc;margin:6px 0}
 .boss-btn{padding:10px 12px;font-size:13px;min-width:88px;flex-direction:column;gap:2px;
@@ -260,6 +264,9 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
   font-variant-numeric:tabular-nums}
 .shop-item.owned{border-color:#3a3a3a;background:linear-gradient(180deg,#0f0f0f,#050505)}
 .shop-item.owned .price{color:#8e8}
+.shop-item.admin-item{border-color:#ffd166}
+.shop-item.admin-item .nm{color:#ffd166}
+.shop-item.admin-item .price{color:#ffd166}
 .shop-item button{margin:0;padding:10px;font-size:14px;width:100%}
 #shopWins{text-align:center;font-size:14px;margin:8px 0 14px;padding:12px;
   border-radius:10px;background:#0f0f0f;border:1px solid #2a2a2a;color:#fff;
@@ -287,18 +294,19 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
   box-shadow:0 0 18px rgba(255,255,255,.4);letter-spacing:.05em}
 #luckyConfirm:hover{background:#e8e8e8}
 
-/* Settings card */
 .settings-card{background:#0f0f0f;border:1px solid #222;border-radius:14px;padding:16px;
   margin:12px 0}
 .settings-card h3{margin-top:0}
 .settings-card input{margin:6px 0}
+.settings-card.admin{border-color:#ffd166;background:linear-gradient(180deg,#1a1408,#0a0805)}
+.settings-card.admin h3{color:#ffd166}
 .avatar-row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
 .avatar-big{width:80px;height:80px;border-radius:50%;background:#1a1a1a;
   border:2px solid #444;display:flex;align-items:center;justify-content:center;
   font-size:32px;color:#666;overflow:hidden;flex-shrink:0}
 .avatar-big img{width:100%;height:100%;object-fit:cover;display:block}
+.avatar-big.admin{border-color:#ffd166;box-shadow:0 0 20px rgba(255,209,102,.4)}
 
-/* Room list */
 .room-card{display:flex;align-items:center;gap:12px;padding:12px;
   background:#0f0f0f;border:1px solid #222;border-radius:12px;margin:8px 0;
   transition:border-color .15s}
@@ -344,6 +352,7 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
     <button class="menu-tile" id="tileShop">🛒<span>ร้านค้า</span></button>
     <button class="menu-tile" id="tileRank">★<span>อันดับ</span></button>
     <button class="menu-tile wide" id="tileSettings">⚙<span>ตั้งค่า</span></button>
+    <button class="menu-tile wide admin" id="tileAdmin" style="display:none">👑<span>เครื่องแอดมิน</span></button>
   </div>
 
   <div id="cnt"></div>
@@ -357,7 +366,6 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
 
 <div id="play" class="screen">
   <h1>เริ่มเล่น</h1>
-
   <h3>โหมดเดี่ยว</h3>
   <button class="big" id="btnBot">⚔  สู้กับบอท <span style="font-size:12px;opacity:.7;margin-left:auto">+1</span></button>
   <button class="big" id="btnBoss">☠  สู้บอส</button>
@@ -378,7 +386,6 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
     <div class="hint" id="bossHint">1 = สู้คนเดียว • 2-5 = สร้างห้องรอเพื่อน</div>
     <button class="big gray" id="btnBossCancel" style="margin-top:8px">← ยกเลิก</button>
   </div>
-
   <button class="big" id="btnEndless">∞  โหมดไม่สิ้นสุด</button>
   <div id="endlessOpt" class="online-opt" style="display:none">
     <div class="hint">เลือกจำนวนผู้เล่น:</div>
@@ -392,7 +399,6 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
     <div class="hint">∞ คลื่นไม่มีที่สิ้นสุด • ทุก 10 = มินิบอส • ทุก 50 = บอสใหญ่ • ฟื้น HP 50% ทุกคลื่น</div>
     <button class="big gray" id="btnEndlessCancel" style="margin-top:8px">← ยกเลิก</button>
   </div>
-
   <h3>ห้องออนไลน์</h3>
   <div class="tabs">
     <button id="tabRooms" class="on">ห้องที่มีอยู่</button>
@@ -421,7 +427,6 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
     <div class="hint" id="createSizeLabel">จำนวนผู้เล่น: 2</div>
     <button class="big primary" id="btnCreateRoom">🏠 สร้างห้อง</button>
   </div>
-
   <button class="big gray" id="playBack" style="margin-top:16px">← กลับ</button>
 </div>
 
@@ -439,6 +444,50 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
   <button class="big gray" id="shopBack">← กลับ</button>
 </div>
 
+<div id="admin" class="screen">
+  <h1>👑 เครื่องแอดมิน</h1>
+  <div class="hint">TOUx1 — โหมดแก้ไขไม่จำกัด</div>
+
+  <div class="settings-card admin">
+    <h3>★ ชัยชนะ</h3>
+    <input type="number" id="admWinsInput" placeholder="จำนวน" value="1000" min="0" max="9999999">
+    <div style="display:flex;gap:6px;margin-top:8px">
+      <button class="big green" id="admAddWins" style="flex:1;margin:0">+ เสกชัยชนะ</button>
+      <button class="big danger" id="admSubWins" style="flex:1;margin:0">− ลบชัยชนะ</button>
+    </div>
+    <div class="hint" id="admWinsStatus"></div>
+  </div>
+
+  <div class="settings-card admin">
+    <h3>❤ HP ตัวละครตัวเอง</h3>
+    <div class="hint" style="text-align:left;margin:0 0 8px">ค่าที่ใช้กับตัวละครที่เลือกอยู่ตอนนี้</div>
+    <input type="number" id="admHpInput" placeholder="HP" value="500" min="1" max="99999">
+    <button class="big primary" id="admSetHp">💾 ตั้ง HP</button>
+  </div>
+
+  <div class="settings-card admin">
+    <h3>⚡ ความเร็วการปล่อยสกิล</h3>
+    <div class="hint" style="text-align:left;margin:0 0 8px">
+      ตัวคูณคูลดาวน์ • 0.01 = เร็ว 100 เท่า • 10 = ช้า 10 เท่า
+    </div>
+    <input type="range" id="admCdMult" min="0.01" max="10" step="0.01" value="1" style="width:100%;accent-color:#ffd166">
+    <div id="admCdVal" style="text-align:center;color:#ffd166;font-weight:700;margin:6px 0">CD × 1.00</div>
+    <button class="big primary" id="admSetCd">💾 ตั้งค่า CD</button>
+  </div>
+
+  <div class="settings-card admin">
+    <h3>✦ สกิลไม่จำกัด</h3>
+    <div class="hint" style="text-align:left;margin:0 0 8px">
+      ปลดล็อกให้ตัวละครปัจจุบันใส่สกิลได้ทุกธาตุ ไม่จำกัดช่อง
+    </div>
+    <button class="big primary" id="admAllSkills">✦ ใส่ทุกสกิลให้ตัวละครนี้</button>
+    <button class="big gray" id="admClearSkills">✕ เคลียร์สกิลทั้งหมด</button>
+  </div>
+
+  <button class="big gray" id="admReset">↻ รีเซ็ตค่าแอดมินทั้งหมด</button>
+  <button class="big gray" id="adminBack">← กลับ</button>
+</div>
+
 <div id="settings" class="screen">
   <h1>ตั้งค่า</h1>
   <div class="settings-card">
@@ -453,7 +502,6 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
     <button class="big primary" id="btnSaveAccount">💾 บันทึกเข้าระบบ</button>
     <div class="hint" id="accountStatus"></div>
   </div>
-
   <div class="settings-card">
     <h3>🔑 กู้คืนรหัส</h3>
     <div class="hint" style="text-align:left;margin:0 0 8px">ใส่ชื่อผู้ใช้ + รหัสคีย์พาสที่ตั้งไว้ เพื่อเข้าสู่ระบบ</div>
@@ -461,7 +509,6 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
     <input type="password" id="recKey" placeholder="รหัสคีย์พาส 6 ตัว" maxlength="6">
     <button class="big" id="btnRecover">↻ กู้คืนและเข้าสู่ระบบ</button>
   </div>
-
   <button class="big gray" id="settingsBack">← กลับ</button>
 </div>
 
@@ -485,8 +532,16 @@ input[type=text]::placeholder,input[type=password]::placeholder{color:#555;lette
     <canvas id="pv" width="96" height="96" style="width:64px;height:64px;border-radius:50%;background:#050505;border:2px solid #333"></canvas>
   </div>
   <div class="hint">ตัวละครในเกมใช้นิ่ง (เฟรมแรก)</div>
+
+  <div id="adminEditorFields" class="settings-card admin" style="display:none">
+    <h3>👑 ตั้งค่าแอดมิน (ตัวละครนี้)</h3>
+    <div class="row"><span>❤ HP ตัวละคร</span><input type="number" id="admCharHp" min="1" max="99999" value="100" style="flex:1;padding:8px;font-size:13px;margin:0"></div>
+    <div class="row"><span>⚡ CD × (ยิ่งน้อย=ยิ่งเร็ว)</span><input type="number" id="admCharCd" min="0.01" max="10" step="0.01" value="1" style="flex:1;padding:8px;font-size:13px;margin:0"></div>
+  </div>
+
   <h3>เลือกสกิล (สูงสุด <span id="skMax">2</span>)</h3>
   <div class="bar2" id="skpick"></div>
+  <button class="big" id="btnAllSkillsEdit" style="display:none;background:#2a1a00;border-color:#ffd166;color:#ffd166">✦ ใส่ทุกสกิล (แอดมิน)</button>
   <h3>ปรับแต่งเอฟเฟคสกิล</h3>
   <div id="skset"></div>
   <h3>อาวุธ</h3>
@@ -631,6 +686,7 @@ var DARK_UNLOCK = 2000;
 var SHOP_SLOT3_COST = 200;
 var SHOP_KATANA_COST = 500;
 var SHOP_LUCKY_COST = 1500;
+var SHOP_TOU_COST = 0;                 /* TOUx1 — ตั้งราคาได้ตามใจ */
 var KATANA_DMG = 0.4;
 var KATANA_CD = 0.2;
 var KATANA_RANGE = R*5;
@@ -639,10 +695,14 @@ var LUCKY_CARD_DMG = 3;
 var ENDLESS_MAX_BOTS = 28;
 var ENDLESS_INTRO_TIME = 2.2;
 var ENDLESS_CLEAR_TIME = 2.8;
+/* ★ เทพจากคอมโบ แสง+ลูกน้อง */
+var GOD_MINION_HP = 15;
+var GOD_MINION_DMG = 5;
+var GOD_MINION_CD = 5;
 var guestSuckPress = 0;
 var MINION_ID = 0;
 
-/* ================= เอฟเฟคพื้นหลัง ขาวๆ ลอย ================= */
+/* ================= เอฟเฟคพื้นหลัง ================= */
 (function bgFx(){
   var cv=$('bgfx'),cx=cv.getContext('2d'),P=[];
   function rs(){cv.width=innerWidth;cv.height=innerHeight}
@@ -713,7 +773,8 @@ var ELEM_SVG={
  bossSummon:'<circle cx="12" cy="12" r="10" fill="none" stroke="COLOR" stroke-width="2"/><polygon points="12,5 8,13 11,13 10,19 16,11 13,11 14,5" fill="COLOR"/>',
  dark:'<circle cx="12" cy="12" r="9.5" fill="COLOR" opacity=".18"/><circle cx="12" cy="12" r="7" fill="COLOR" opacity=".35"/><circle cx="12" cy="12" r="5" fill="COLOR" opacity=".65"/><circle cx="12" cy="12" r="3.2" fill="#0a0014"/><circle cx="12" cy="12" r="1.4" fill="#000"/><g stroke="COLOR" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".85"><path d="M12 1.5 Q15.5 5 12 8"/><path d="M12 16 Q15.5 19 12 22.5"/><path d="M1.5 12 Q5 8.5 8 12"/><path d="M16 12 Q19 15.5 22.5 12"/></g>',
  water:'<path d="M12 2.5 Q7 9 7 14 Q7 18 9.5 20 Q11 21 12 21 Q13 21 14.5 20 Q17 18 17 14 Q17 9 12 2.5 Z" fill="COLOR"/><path d="M9.5 13.5 Q9.5 16 10.8 17.2" stroke="#fff" stroke-width="1.4" fill="none" opacity=".7" stroke-linecap="round"/><path d="M2 18 Q4.5 16.5 7 18 T12 18 T17 18 T22 18" stroke="COLOR" stroke-width="1.6" fill="none" opacity=".55" stroke-linecap="round"/>',
- timeStop:'<circle cx="12" cy="12" r="9" fill="none" stroke="COLOR" stroke-width="2.4"/><path d="M12 6 L12 12 L16 14" stroke="COLOR" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="COLOR"/>'
+ timeStop:'<circle cx="12" cy="12" r="9" fill="none" stroke="COLOR" stroke-width="2.4"/><path d="M12 6 L12 12 L16 14" stroke="COLOR" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="COLOR"/>',
+ god:'<circle cx="12" cy="12" r="3" fill="COLOR"/><circle cx="12" cy="12" r="1.5" fill="#fff"/><g stroke="COLOR" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/><line x1="4" y1="4" x2="6.2" y2="6.2"/><line x1="17.8" y1="17.8" x2="20" y2="20"/><line x1="4" y1="20" x2="6.2" y2="17.8"/><line x1="17.8" y1="6.2" x2="20" y2="4"/></g>'
 };
 function elemSvg(id,size,color){
  size=size||18;color=color||(SK[id]&&SK[id].color)||'#fff';
@@ -744,6 +805,8 @@ var SK={
        slots:{cast:'คลื่นน้ำ', status:'ถูกผลัก'}},
  pet:{n:'สัตว์เลี้ยง', dmg:1, cd:10, power:0.5, color:'#ff88cc', status:'summon',
       slots:{cast:'ตอนเรียก (5 ตัว)', status:'ลูกน้อง (3 HP, ต่อย)'}},
+ god:{n:'เทพ',     dmg:GOD_MINION_DMG, cd:GOD_MINION_CD, power:0.5, color:'#ffeaa7', status:'godPet',
+      slots:{cast:'ตอนเรียกเทพ', status:'เทพต่อย 5 ดาเมจ'}},
  bossSummon:{n:'สมุนบอส', dmg:1, cd:10, power:0.5, color:'#ff2244', status:'summon',
       slots:{cast:'ตอนเรียกสมุน', status:'สมุนบอส 50 HP, สายฟ้า'}}
 };
@@ -761,6 +824,7 @@ function getCombo(skills){
    if(s1==='light'&& s2==='stone') return 'lightStone';
    if(s1==='lightning' && s2==='stone') return 'lightningStone';
    if(s1==='dark' && s2==='ice') return 'timeStop';
+   if(s1==='light' && s2==='pet') return 'lightPet';   /* ★ NEW */
   }
  }
  return null;
@@ -771,7 +835,8 @@ var COMBO_INFO = {
  petStone:      {n:'🪨🐾 สัตว์เลี้ยง+หิน = หินเรียกสมุน', d:'หินร่วง 1 ก้อน โดน 2 ดาเมจ • ตกถึงพื้นกลายเป็นลูกน้อง 1 ตัว (HP '+PET_STONE_MINION_HP+')'},
  lightStone:    {n:'✦🪨 แสง+หิน = ลำแสงเทพ',   d:'แสงสว่างจากฟ้าตกลงมา สตันศัตรู '+HOLY_LIGHT_STUN+' วิ • เทพลงมาต่อย '+GOD_PUNCH_DMG+' ดาเมจ'},
  lightningStone:{n:'⚡🪨 สายฟ้า+หิน = หินสายฟ้า', d:'หินสายฟ้าตก '+LIGHTNING_STONE_DROPS+' จุดแบบสุ่ม • สตัน '+LIGHTNING_STONE_STUN+' วิ • คลื่นไฟฟ้าจุดแรกรอบจุดตก '+LIGHTNING_FIELD_DUR+' วิ • คูลดาวน์ '+LIGHTNING_STONE_CD+' วิ'},
- timeStop:      {n:'🌑❄ มืด+น้ำแข็ง = หยุดเวลา', d:'หยุดเวลาศัตรู '+TIME_STOP_DUR+' วิ • กระสุนที่ยิงจะค้างกลางอากาศ • เวลาหมดกระสุนพุ่งเข้าหาศัตรูพร้อมกัน • คูลดาวน์ '+TIME_STOP_CD+' วิ'}
+ timeStop:      {n:'🌑❄ มืด+น้ำแข็ง = หยุดเวลา', d:'หยุดเวลาศัตรู '+TIME_STOP_DUR+' วิ • กระสุนที่ยิงจะค้างกลางอากาศ • เวลาหมดกระสุนพุ่งเข้าหาศัตรูพร้อมกัน • คูลดาวน์ '+TIME_STOP_CD+' วิ'},
+ lightPet:      {n:'✦🐾 แสง+สัตว์เลี้ยง = เทพ', d:'เรียกเทพ 1 ตัว • HP '+GOD_MINION_HP+' • ต่อย '+GOD_MINION_DMG+' ดาเมจ • เมื่อเทพตายรอ '+GOD_MINION_CD+' วิ'}
 };
 
 function applyBalance(s,changed){
@@ -788,7 +853,7 @@ function clamp(v,a,b){v=Number(v);if(!isFinite(v))v=a;return Math.max(a,Math.min
 function newCanvas(n){n=n||S;var c=document.createElement('canvas');c.width=c.height=n;return c;}
 function blankFrame(){return newCanvas().toDataURL('image/png');}
 function defSkill(id){var d=SK[id];return {id:id,dmg:d.dmg,cd:d.cd,power:d.power,color:d.color,slots:{cast:[],status:[]}};}
-function show(id){['menu','rank','editor','skeffect','battle','shop','settings','play','chars'].forEach(function(s){$(s).classList.toggle('on',s===id);});}
+function show(id){['menu','rank','editor','skeffect','battle','shop','settings','play','chars','admin'].forEach(function(s){$(s).classList.toggle('on',s===id);});}
 function loadImg(src){return new Promise(function(r){
  if(!src){r(null);return;}
  var im=new Image();im.onload=function(){r(im);};im.onerror=function(){r(null);};im.src=src;});}
@@ -802,10 +867,6 @@ function loadAccount(){
 function saveAccountLocal(a){
  try{if(a)localStorage.setItem('circ_account',JSON.stringify(a));
      else localStorage.removeItem('circ_account');}catch(e){}
-}
-function getPlayerName(){
- if(ACC && ACC.name) return ACC.name;
- var c=CH[ACT]; return c?c.name:'ผู้เล่น';
 }
 function renderProfileCard(){
  var el=$('profileAvatar'),nm=$('profileName'),wn=$('profileWins');
@@ -842,6 +903,14 @@ function addWinsForName(name,amount){
  m[name]=(Math.max(0,Math.floor(Number(m[name])||0)))+amount;
  saveWinsMap(m);
 }
+function setWinsForName(name,total){
+ name=String(name||'').trim().slice(0,12);
+ if(!name)return;
+ total=Math.max(0,Math.floor(Number(total)||0));
+ var m=loadWinsMap();
+ m[name]=total;
+ saveWinsMap(m);
+}
 function getWinsForName(name){
  name=String(name||'').trim().slice(0,12);
  if(!name)return 0;
@@ -860,10 +929,6 @@ function syncWinsToServer(){
  var a=getChars();
  a.forEach(function(c){ if(c && c.wins>0) submitWin(c.name, c.wins); });
 }
-function getWinBadgeForName(name){
- /* just for display */
- return '';
-}
 
 /* ================= ร้านค้า ================= */
 function getShop(){
@@ -877,8 +942,22 @@ function saveShop(s){try{localStorage.setItem('circ_shop',JSON.stringify(s));}ca
 function hasKatana(){return !!getShop().katana;}
 function hasSlot3(){return !!getShop().slot3;}
 function hasLucky(){return !!getShop().lucky;}
+function isAdmin(){return !!getShop().tou;}
+
+/* ★ Admin config ต่อผู้เล่น */
+function getAdminCfg(){
+ try{
+  var c=JSON.parse(localStorage.getItem('circ_admin')||'{}');
+  if(!c || typeof c!=='object') c={};
+  if(typeof c.cdMult!=='number') c.cdMult=1;
+  return c;
+ }catch(e){return {cdMult:1};}
+}
+function saveAdminCfg(c){try{localStorage.setItem('circ_admin',JSON.stringify(c));}catch(e){}}
 
 var SHOP_ITEMS = [
+ {id:'tou', n:'TOUx1 (สิทธิ์แอดมิน)', icon:'👑', cost:SHOP_TOU_COST, color:'#ffd166',
+  desc:'ปลดล็อก "เครื่องแอดมิน" • เสก/ลบชัยชนะไม่จำกัด • ปรับ HP ตัวเอง • ปรับความเร็วปล่อยสกิล • ใส่ทุกสกิลได้ไม่จำกัด'},
  {id:'slot3', n:'เพิ่มช่องสกิล', icon:'✦', cost:SHOP_SLOT3_COST, color:'#fff',
   desc:'ใส่สกิลได้สูงสุด 3 อัน (จากเดิม 2 อัน) — ใช้ได้ทุกตัวละคร'},
  {id:'katana', n:'ดาบคาตานะ', icon:'⚔', cost:SHOP_KATANA_COST, color:'#ff2244',
@@ -898,7 +977,7 @@ function renderShop(){
  SHOP_ITEMS.forEach(function(item){
   var owned=!!shop[item.id];
   var can=wins>=item.cost;
-  var cls='shop-item'+(owned?' owned':'');
+  var cls='shop-item'+(owned?' owned':'')+(item.id==='tou'?' admin-item':'');
   h+='<div class="'+cls+'">'+
      '<div class="head">'+
       '<div class="icn" style="color:'+item.color+'">'+item.icon+'</div>'+
@@ -931,6 +1010,7 @@ $('shopList').addEventListener('click',function(e){
  shop[id]=true;
  saveShop(shop);
  toast('✓ ซื้อ '+item.n+' สำเร็จ!');
+ if(id==='tou'){ toast('👑 ปลดล็อกเครื่องแอดมินแล้ว!'); refreshAdminTile(); }
  renderShop();
  renderMenu();
  drawStaticPreviews();
@@ -942,7 +1022,7 @@ $('tileShop').onclick=function(){
 };
 $('shopBack').onclick=function(){show('menu');};
 
-/* ================= sanitize chars ================= */
+/* ================= sanitize ================= */
 function sanitize(c){
  if(!c||typeof c!=='object')return null;
  var rawWins=Number(c.wins);
@@ -960,6 +1040,10 @@ function sanitize(c){
   o._isEndlessBot = true;
   o._botVariant = Math.max(0, Math.min(9, Math.floor(Number(c._botVariant)||0)));
  }
+ /* ★ admin fields */
+ if(c._adminHp) o._adminHp = Math.max(1, Math.min(99999, Math.floor(Number(c._adminHp))));
+ if(c._adminCdMult) o._adminCdMult = Math.max(0.01, Math.min(10, Number(c._adminCdMult)));
+ if(c._adminAllSkills) o._adminAllSkills = true;
  if(c.minion && typeof c.minion==='object'){
   o.minion = {frames:[]};
   (Array.isArray(c.minion.frames)?c.minion.frames:[]).slice(0,8).forEach(function(f){
@@ -971,11 +1055,14 @@ function sanitize(c){
  (Array.isArray(c.frames)?c.frames:[]).slice(0,8).forEach(function(f){
   if(typeof f==='string'&&f.indexOf('data:image/png;base64,')===0&&f.length<MAXF)o.frames.push(f);});
  if(!o.frames.length)o.frames.push(blankFrame());
- var maxSk = c._isBoss ? 4 : (hasSlot3() ? 3 : 2);
+ /* ★ admin ปลดล็อกสกิลไม่จำกัด / มืดใช้ได้ */
+ var adminUnlock = !!c._adminAllSkills;
+ var maxSk = c._isBoss ? 4 : (adminUnlock ? 999 : (hasSlot3() ? 3 : 2));
  var seen={};
  (Array.isArray(c.skills)?c.skills:[]).forEach(function(s){
   if(!s||!SK[s.id]||seen[s.id]||o.skills.length>=maxSk)return;
-  if(s.id==='dark' && !c._isBoss && o.wins < DARK_UNLOCK) return;
+  if(s.id==='dark' && !c._isBoss && !adminUnlock && o.wins < DARK_UNLOCK) return;
+  if(s.id==='god') return; /* ★ สกิลเทพไม่ให้ผู้เล่นเลือกเอง */
   seen[s.id]=1;
   var slots={cast:[],status:[]};
   ['cast','status'].forEach(function(slot){
@@ -1000,6 +1087,9 @@ function strip(c){
  if(c._isBoss){o._isBoss=true;o._hp=c._hp;o._r=c._r;o._bossLevel=c._bossLevel;o._bossType=c._bossType;}
  if(c._isEndlessBot){o._isEndlessBot=true;o._botVariant=c._botVariant;}
  if(c.minion) o.minion = c.minion;
+ if(c._adminHp) o._adminHp = c._adminHp;
+ if(c._adminCdMult) o._adminCdMult = c._adminCdMult;
+ if(c._adminAllSkills) o._adminAllSkills = true;
  return o;
 }
 function prepChar(c){
@@ -1048,7 +1138,12 @@ function loadChars(){
  var a=getChars();
  return Promise.all(a.map(function(c){return c?prepChar(c):null;})).then(function(r){
   CH=r;if(!CH[ACT]){ACT=CH[0]?0:(CH[1]?1:0);}renderMenu();drawStaticPreviews();
-  renderProfileCard();});
+  renderProfileCard();refreshAdminTile();});
+}
+
+function refreshAdminTile(){
+ var t=$('tileAdmin');
+ if(t) t.style.display = isAdmin() ? 'flex' : 'none';
 }
 
 function renderMenu(){
@@ -1058,14 +1153,15 @@ function renderMenu(){
   h+='<div class="card'+(ACT===i&&c?' act':'')+'" data-i="'+i+'">';
   if(c){
    var wp = c.weapon && c.weapon!=='none' ? '<span class="tag">⚔ '+WEAPONS[c.weapon].n+'</span>' : '';
+   var adminTag = c._adminAllSkills ? '<span class="tag admin">👑 แอดมิน</span>' : '';
    var comboTag = '';
    var cb = getCombo(c.skills);
    if(cb){
-    var ccls = cb==='timeStop'?'ts':'';
+    var ccls = cb==='timeStop'?'ts':(cb==='lightPet'?'lp':'');
     comboTag = '<br><span class="combo-tag '+ccls+'">'+COMBO_INFO[cb].n+'</span>';
    }
    h+='<canvas width="96" height="96" class="pvc" data-i="'+i+'"></canvas>'+
-      '<div class="info"><b>'+esc(c.name)+'</b><br>'+
+      '<div class="info"><b>'+esc(c.name)+'</b>'+adminTag+'<br>'+
       c.skills.map(function(s){return elemSvg(s.id,14,s.color)+' '+SK[s.id].n}).join(' &nbsp; ')+
       ' '+wp+ comboTag +
       '<br><span class="tag">★ ชนะ '+c.wins+'</span></div>'+
@@ -1138,15 +1234,122 @@ $('tileRank').onclick=function(){show('rank');loadRank();};
 $('rankRefresh').onclick=loadRank;
 $('rankBack').onclick=function(){show('menu');};
 
+/* ================= Admin screen ================= */
+$('tileAdmin').onclick=function(){
+ if(!isAdmin()){toast('ต้องซื้อ TOUx1 ก่อน');return;}
+ openAdmin();
+};
+$('adminBack').onclick=function(){show('menu');renderProfileCard();};
+
+function openAdmin(){
+ /* current HP of active char */
+ var c = CH[ACT];
+ $('admHpInput').value = (c && c._adminHp) ? c._adminHp : (c ? 100 : 500);
+ $('admWinsInput').value = 1000;
+ var cfg = getAdminCfg();
+ var mult = cfg.cdMult || 1;
+ $('admCdMult').value = mult;
+ $('admCdVal').textContent = 'CD × ' + Number(mult).toFixed(2);
+ var wins = ACC && typeof ACC.wins==='number' ? ACC.wins : (c?c.wins:0);
+ $('admWinsStatus').textContent = 'ชัยชนะปัจจุบัน: ★ ' + wins;
+ show('admin');
+}
+$('admCdMult').addEventListener('input', function(){
+ $('admCdVal').textContent = 'CD × ' + Number(this.value).toFixed(2);
+});
+$('admSetCd').onclick=function(){
+ var cfg = getAdminCfg();
+ cfg.cdMult = clamp($('admCdMult').value, 0.01, 10);
+ saveAdminCfg(cfg);
+ if(CH[ACT]){
+  var a=getChars();
+  a[ACT]._adminCdMult = cfg.cdMult;
+  setStore(a);
+  loadChars().then(function(){toast('✓ ตั้ง CD × '+cfg.cdMult.toFixed(2));});
+ } else {
+  toast('✓ บันทึกแล้ว (จะใช้กับตัวละครใหม่)');
+ }
+};
+$('admAddWins').onclick=function(){
+ var n = Math.max(0, Math.floor(Number($('admWinsInput').value)||0));
+ if(!n){toast('ใส่จำนวน');return;}
+ var name = ACC && ACC.name ? ACC.name : (CH[ACT]?CH[ACT].name:'');
+ if(!name){toast('ต้องมีชื่อ');return;}
+ var cur = getWinsForName(name);
+ var newTot = cur + n;
+ setWinsForName(name, newTot);
+ if(ACC && ACC.name){
+  ACC.wins = newTot;
+  saveAccountLocal(ACC);
+ }
+ /* apply to active char too */
+ var a = getChars();
+ if(a[ACT]){ a[ACT].wins = newTot; setStore(a); }
+ submitWin(name, newTot);
+ toast('★ +'+n+' ชัยชนะ (รวม '+newTot+')');
+ $('admWinsStatus').textContent = 'ชัยชนะปัจจุบัน: ★ ' + newTot;
+ loadChars().then(renderProfileCard);
+};
+$('admSubWins').onclick=function(){
+ var n = Math.max(0, Math.floor(Number($('admWinsInput').value)||0));
+ if(!n){toast('ใส่จำนวน');return;}
+ var name = ACC && ACC.name ? ACC.name : (CH[ACT]?CH[ACT].name:'');
+ if(!name){toast('ต้องมีชื่อ');return;}
+ var cur = getWinsForName(name);
+ var newTot = Math.max(0, cur - n);
+ setWinsForName(name, newTot);
+ if(ACC && ACC.name){
+  ACC.wins = newTot;
+  saveAccountLocal(ACC);
+ }
+ var a = getChars();
+ if(a[ACT]){ a[ACT].wins = newTot; setStore(a); }
+ submitWin(name, newTot);
+ toast('★ −'+n+' ชัยชนะ (เหลือ '+newTot+')');
+ $('admWinsStatus').textContent = 'ชัยชนะปัจจุบัน: ★ ' + newTot;
+ loadChars().then(renderProfileCard);
+};
+$('admSetHp').onclick=function(){
+ var hp = Math.max(1, Math.min(99999, Math.floor(Number($('admHpInput').value)||100)));
+ if(!CH[ACT]){toast('สร้างตัวละครก่อน');return;}
+ var a = getChars();
+ a[ACT]._adminHp = hp;
+ setStore(a);
+ loadChars().then(function(){toast('✓ ตั้ง HP = '+hp);});
+};
+$('admAllSkills').onclick=function(){
+ if(!CH[ACT]){toast('สร้างตัวละครก่อน');return;}
+ var allIds = Object.keys(SK).filter(function(id){return id!=='pet'?'true':id!=='pet' && id!=='god';}).filter(function(id){return id!=='god' && id!=='bossSummon';});
+ var skills = allIds.map(function(id){ return defSkill(id); });
+ var a = getChars();
+ a[ACT].skills = skills;
+ a[ACT]._adminAllSkills = true;
+ setStore(a);
+ loadChars().then(function(){toast('✦ ใส่ทุกสกิล ('+skills.length+') เรียบร้อย');});
+};
+$('admClearSkills').onclick=function(){
+ if(!CH[ACT]){toast('สร้างตัวละครก่อน');return;}
+ var a = getChars();
+ a[ACT].skills = [defSkill('fire')];
+ setStore(a);
+ loadChars().then(function(){toast('✕ เคลียร์สกิล');});
+};
+$('admReset').onclick=function(){
+ if(!confirm('ล้างค่าแอดมินทั้งหมดของตัวละครนี้?'))return;
+ if(!CH[ACT]){return;}
+ var a = getChars();
+ delete a[ACT]._adminHp;
+ delete a[ACT]._adminCdMult;
+ delete a[ACT]._adminAllSkills;
+ setStore(a);
+ saveAdminCfg({cdMult:1});
+ loadChars().then(function(){toast('↻ รีเซ็ตแล้ว');openAdmin();});
+};
+
 /* ================= ปุ่มเมนู ================= */
-$('tileChars').onclick=function(){
- show('chars');
-};
+$('tileChars').onclick=function(){ show('chars'); };
 $('charsBack').onclick=function(){show('menu');drawStaticPreviews();};
-$('tilePlay').onclick=function(){
- show('play');
- renderRooms();
-};
+$('tilePlay').onclick=function(){ show('play'); renderRooms(); };
 $('playBack').onclick=function(){
  $('roomsView').style.display='block';
  $('createView').style.display='none';
@@ -1266,19 +1469,24 @@ function updateMinionBtn(){
 function renderSkPick(){
  var h='';
  var wins = (ACC && typeof ACC.wins==='number') ? ACC.wins : (ED.wins||0);
+ var adminUser = isAdmin();
  Object.keys(SK).forEach(function(id){
   if(id==='bossSummon') return;
+  if(id==='god') return; /* ★ สกิลเทพ มาจากคอมโบเท่านั้น */
   var on=ED.skills.some(function(s){return s.id===id});
   var isBossEdit = !!(CH[ED.slot] && CH[ED.slot]._isBoss);
-  var locked = (id==='dark') && !isBossEdit && wins < DARK_UNLOCK;
+  var locked = (id==='dark') && !isBossEdit && !adminUser && wins < DARK_UNLOCK;
   var style = 'border-color:'+(on?SK[id].color:'#2a2a2a')+';'+(locked?'opacity:.4':'');
   h+='<button data-s="'+id+'" class="'+(on?'on':'')+'" style="'+style+'">'+
      elemSvg(id,16,SK[id].color)+' '+SK[id].n+(locked?' 🔒'+DARK_UNLOCK:'')+
      '</button>';
  });
  $('skpick').innerHTML=h;
- var maxSk = hasSlot3() ? 3 : 2;
- $('skMax').textContent = maxSk;
+ var maxSk = adminUser ? 999 : (hasSlot3() ? 3 : 2);
+ $('skMax').textContent = adminUser ? ('∞ (แอดมิน)' : maxSk);
+ /* show all-skills button */
+ var allBtn = $('btnAllSkillsEdit');
+ if(allBtn) allBtn.style.display = adminUser ? 'flex' : 'none';
  var g='';
  ED.skills.forEach(function(s,i){
   var cN=(s.slots&&s.slots.cast)?s.slots.cast.length:0;
@@ -1295,7 +1503,7 @@ function renderSkPick(){
  });
  var combo = getCombo(ED.skills);
  if(combo){
-  var cbColor = combo==='timeStop'?'#7fdcff':'#ffd166';
+  var cbColor = combo==='timeStop'?'#7fdcff':(combo==='lightPet'?'#ffd166':'#ffd166');
   g += '<div class="bal-info" style="color:'+cbColor+';border-color:'+cbColor+'aa">'+
        '✦ <b>คอมโบ!</b> '+COMBO_INFO[combo].n+'<br>'+COMBO_INFO[combo].d+
        '</div>';
@@ -1315,7 +1523,7 @@ function renderSkPick(){
        '💧 <b>คลื่นน้ำ</b> — ผลักศัตรู + ดาเมจ '+WATER_DMG+' • ทิศทางตามตอนปล่อย'+
        '</div>';
  }
- g+='<div class="bal-info">⚖ ดาเมจ>1.5 → CD≥6 • CD<6 → ดาเมจ≤1.5 • หิน 5.5/ก้อน<br>⚡ สายฟ้า: ช็อต(ไม่หยุด) + tick 0.5<br>🩸 เลือด: ระยะไกล • ฟื้น HP 1.5/วิ 5 วิ<br>☠ พิษ: 0.2/0.5 วิ 5 วิ<br>🪨 หิน: 5 ก้อนร่วง ดาเมจ 5.5/ก้อน<br>✦ แสง: พิษแสง 0.4 ทุก 0.5 วิ<br>🌑 มืด: หลุมดำ '+DARK_HOLE_DUR+' วิ + ระเบิด '+DARK_HOLE_EXPLODE_DMG+' <span style="color:#ff8888">(ต้องมี '+DARK_UNLOCK+' ชัยชนะ)</span><br>💧 น้ำ: คลื่นผลัก + ดาเมจ '+WATER_DMG+'<br>☄ คอมโบ เพลิง+หิน: อุกกาบาต 3 ลูก + ไฟลุก 5 วิ<br>🔥 คอมโบ เพลิง+หมัด: พุ่งชน ระเบิด 5×2 ดาเมจ<br>🪨🐾 คอมโบ สัตว์เลี้ยง+หิน: หิน 1 ก้อน กลายเป็นสมุน 1 ตัว<br>✦🪨 คอมโบ แสง+หิน: สตัน '+HOLY_LIGHT_STUN+' วิ + เทพต่อย '+GOD_PUNCH_DMG+'<br>⚡🪨 คอมโบ สายฟ้า+หิน: หินสายฟ้าตก '+LIGHTNING_STONE_DROPS+' จุด + คลื่นไฟฟ้า '+LIGHTNING_FIELD_DUR+' วิ • CD '+LIGHTNING_STONE_CD+' วิ<br>🌑❄ คอมโบ มืด+น้ำแข็ง: หยุดเวลา '+TIME_STOP_DUR+' วิ • กระสุนค้างกลางอากาศ • CD '+TIME_STOP_CD+' วิ</div>';
+ g+='<div class="bal-info">⚖ ดาเมจ>1.5 → CD≥6 • CD<6 → ดาเมจ≤1.5 • หิน 5.5/ก้อน<br>⚡ สายฟ้า: ช็อต(ไม่หยุด) + tick 0.5<br>🩸 เลือด: ระยะไกล • ฟื้น HP 1.5/วิ 5 วิ<br>☠ พิษ: 0.2/0.5 วิ 5 วิ<br>🪨 หิน: 5 ก้อนร่วง ดาเมจ 5.5/ก้อน<br>✦ แสง: พิษแสง 0.4 ทุก 0.5 วิ<br>🌑 มืด: หลุมดำ '+DARK_HOLE_DUR+' วิ + ระเบิด '+DARK_HOLE_EXPLODE_DMG+' <span style="color:#ff8888">(ต้องมี '+DARK_UNLOCK+' ชัยชนะ)</span><br>💧 น้ำ: คลื่นผลัก + ดาเมจ '+WATER_DMG+'<br>☄ คอมโบ เพลิง+หิน: อุกกาบาต 3 ลูก + ไฟลุก 5 วิ<br>🔥 คอมโบ เพลิง+หมัด: พุ่งชน ระเบิด 5×2 ดาเมจ<br>🪨🐾 คอมโบ สัตว์เลี้ยง+หิน: หิน 1 ก้อน กลายเป็นสมุน 1 ตัว<br>✦🪨 คอมโบ แสง+หิน: สตัน '+HOLY_LIGHT_STUN+' วิ + เทพต่อย '+GOD_PUNCH_DMG+'<br>⚡🪨 คอมโบ สายฟ้า+หิน: หินสายฟ้าตก '+LIGHTNING_STONE_DROPS+' จุด + คลื่นไฟฟ้า '+LIGHTNING_FIELD_DUR+' วิ • CD '+LIGHTNING_STONE_CD+' วิ<br>🌑❄ คอมโบ มืด+น้ำแข็ง: หยุดเวลา '+TIME_STOP_DUR+' วิ • กระสุนค้างกลางอากาศ • CD '+TIME_STOP_CD+' วิ<br>✦🐾 <b style="color:#ffd166">คอมโบ แสง+สัตว์เลี้ยง = เทพ</b> — เรียกเทพ HP '+GOD_MINION_HP+' ต่อย '+GOD_MINION_DMG+' ดาเมจ • ตายแล้วรอ '+GOD_MINION_CD+' วิ</div>';
  $('skset').innerHTML=g;
  updateMinionBtn();
 }
@@ -1330,20 +1538,29 @@ $('skpick').addEventListener('click',function(e){
  var t=e.target.closest('button[data-s]');if(!t)return;
  var id=t.dataset.s;
  var isBossEdit = !!(CH[ED.slot] && CH[ED.slot]._isBoss);
+ var adminUser = isAdmin();
  var wins = (ACC && typeof ACC.wins==='number') ? ACC.wins : (ED.wins||0);
- if(id==='dark' && !isBossEdit && wins < DARK_UNLOCK){
+ if(id==='dark' && !isBossEdit && !adminUser && wins < DARK_UNLOCK){
   toast('🔒 ธาตุมืดต้องมีชัยชนะ '+DARK_UNLOCK+' ก่อน (มี '+wins+')');
   return;
  }
  var k=-1;ED.skills.forEach(function(s,i){if(s.id===id)k=i;});
  if(k>=0)ED.skills.splice(k,1);
  else{
-  var maxSk = hasSlot3() ? 3 : 2;
+  var maxSk = adminUser ? 999 : (hasSlot3() ? 3 : 2);
   if(ED.skills.length>=maxSk){toast('เลือกได้สูงสุด '+maxSk+' สกิล');return;}
   ED.skills.push(defSkill(id));
  }
  renderSkPick();
 });
+$('btnAllSkillsEdit').onclick=function(){
+ if(!isAdmin()){toast('เฉพาะแอดมิน');return;}
+ var allIds = Object.keys(SK).filter(function(id){return id!=='god' && id!=='bossSummon';});
+ /* clear and add all */
+ ED.skills = allIds.map(function(id){ return defSkill(id); });
+ renderSkPick();
+ toast('✦ ใส่ทุกสกิล ('+ED.skills.length+')');
+};
 $('skset').addEventListener('input',function(e){
  var t=e.target,i=t.dataset.i,f=t.dataset.f;if(i===undefined)return;
  var s=ED.skills[+i];if(!s)return;
@@ -1417,6 +1634,15 @@ function openEditor(slot){
  if(!ED.minionFrames.length) ED.minionFrames=[newCanvas()];
  ED.editingMinion=false;
  $('minionHint').style.display='none';
+ /* ★ admin fields */
+ if(isAdmin()){
+  $('adminEditorFields').style.display='block';
+  $('admCharHp').value = (c && c._adminHp) ? c._adminHp : 100;
+  var cfg = getAdminCfg();
+  $('admCharCd').value = (c && c._adminCdMult) ? c._adminCdMult : (cfg.cdMult||1);
+ } else {
+  $('adminEditorFields').style.display='none';
+ }
  updateMinionBtn();
  loadFrame(0);renderSkPick();renderWeaponPick();show('editor');
 }
@@ -1437,7 +1663,8 @@ $('btnSave').onclick=function(){
  var currentWins=freshOld?freshOld.wins:(ED.wins||0);
  var hasDark = ED.skills.some(function(s){return s.id==='dark';});
  var accWins = (ACC && typeof ACC.wins==='number') ? ACC.wins : currentWins;
- if(hasDark && !(freshOld && freshOld._isBoss) && accWins < DARK_UNLOCK){
+ var adminUser = isAdmin();
+ if(hasDark && !(freshOld && freshOld._isBoss) && !adminUser && accWins < DARK_UNLOCK){
   toast('🔒 ธาตุมืดต้องมีชัยชนะ '+DARK_UNLOCK+' ก่อน');
   return;
  }
@@ -1446,6 +1673,19 @@ $('btnSave').onclick=function(){
  var obj=sanitize({name:name,frames:urls,skills:ED.skills,wins:currentWins,weapon:ED.weapon});
  if(ED.skills.some(function(s){return s.id==='pet';})){
   obj.minion = {frames: ED.minionFrames.map(function(c){return c.toDataURL('image/png');})};
+ }
+ /* ★ admin fields */
+ if(adminUser){
+  var hp = Math.max(1, Math.min(99999, Math.floor(Number($('admCharHp').value)||100)));
+  var cd = clamp(Number($('admCharCd').value)||1, 0.01, 10);
+  obj._adminHp = hp;
+  obj._adminCdMult = cd;
+  if(ED.skills.length > 2) obj._adminAllSkills = true;
+ } else {
+  /* preserve existing admin flags if they existed (prevent losing them) */
+  if(freshOld && freshOld._adminHp) obj._adminHp = freshOld._adminHp;
+  if(freshOld && freshOld._adminCdMult) obj._adminCdMult = freshOld._adminCdMult;
+  if(freshOld && freshOld._adminAllSkills) obj._adminAllSkills = true;
  }
  var a=getChars();a[ED.slot]=obj;setStore(a);
  var wmap=loadWinsMap();
@@ -1761,9 +2001,7 @@ function modeLabel(m){
 }
 
 function renderRooms(){
- ensureWs().then(function(){
-  wsSend({a:'listRooms'});
- }).catch(function(){});
+ ensureWs().then(function(){ wsSend({a:'listRooms'}); }).catch(function(){});
 }
 
 function renderRoomsList(rooms){
@@ -1981,6 +2219,8 @@ function spawnPositions(n){
 }
 function mk(c,pos,index){
  var baseHp = c._hp || 100;
+ /* ★ Admin HP override (เฉพาะตัวละครไม่ใช่บอส/บอท) */
+ if(!c._isBoss && !c._isEndlessBot && c._adminHp) baseHp = c._adminHp;
  var p = {c:c,index:index,alive:true,
   x:pos.x,y:pos.y,vx:pos.vx,vy:pos.vy,hp:baseHp,maxHp:baseHp,
   r: c._r || R,
@@ -1997,6 +2237,7 @@ function mk(c,pos,index){
   flash:0,say:0,sayT:0,
   weaponCd:0,swingT:0,swingAng:0,
   luckyCd:0,
+  lightPetCd:0,          /* ★ คูลดาวน์เทพ จากคอมโบ แสง+สัตว์เลี้ยง */
   reserved:false,
   tx:undefined,ty:undefined};
  if(c._isBoss){
@@ -2143,6 +2384,11 @@ function hurtMinion(m, n, color){
   m.alive = false;
   burst(m.x, m.y, m.color||'#ff88cc', 16, 1.6);
   burst(m.x, m.y, '#ffffff', 8, 1.8);
+  /* ★ ถ้าเป็นเทพ ให้ตั้ง CD ที่เจ้าของ */
+  if(m.isGodMinion){
+   var owner = B.players[m.owner];
+   if(owner) owner.lightPetCd = GOD_MINION_CD;
+  }
  }
 }
 function checkWin(){
@@ -2334,6 +2580,29 @@ function castWaterWave(f, k, target, imgsCast, imgsStatus){
   hitSet:{}, pushForce: WATER_PUSH
  });
 }
+/* ★ NEW: เทพจากคอมโบ แสง+สัตว์เลี้ยง */
+function castLightPet(f, k, target, imgsCast, imgsStatus){
+ if(!B.minions) B.minions = [];
+ /* ลบเทพเก่าของเจ้าของถ้ามี */
+ B.minions = B.minions.filter(function(m){ return !(m.owner === f.index && m.isGodMinion); });
+ /* ลบลูกน้องเก่า 5 ตัว (pet เดิม) ถ้ามี เพื่อไม่ให้ซ้อน */
+ var ang = Math.random()*Math.PI*2;
+ var dist = f.r + 50;
+ B.minions.push({
+  id: ++MINION_ID, owner: f.index,
+  x: f.x + Math.cos(ang)*dist, y: f.y + Math.sin(ang)*dist,
+  vx: Math.cos(ang)*100, vy: Math.sin(ang)*100,
+  r: 22,
+  hp: GOD_MINION_HP, maxHp: GOD_MINION_HP, alive: true,
+  attackCd: 0.6,
+  dash: 0, dashAng: 0, dashHit: false, flash: 0,
+  imgs: null, color: '#ffeaa7',
+  isGodMinion: true
+ });
+ burst(f.x, f.y, '#ffeaa7', 60, 2.4);
+ burst(f.x, f.y, '#fff5c0', 40, 2.2);
+ burst(f.x, f.y, '#ffffff', 20, 2.6);
+}
 function castTimeStop(f){
  if(!B.timeStop) B.timeStop = {active:false, left:0, owner:-1};
  B.timeStop.active = true;
@@ -2448,6 +2717,34 @@ function updMinions(dt){
   }
   if(!target){ m.vx *= 0.9; m.vy *= 0.9; m.x += m.vx*dt; m.y += m.vy*dt; return true; }
   m.flash = Math.max(0, m.flash - dt*4);
+
+  /* ★ เทพจากคอมโบ แสง+สัตว์เลี้ยง */
+  if(m.isGodMinion){
+   var aG = Math.atan2(target.y-m.y, target.x-m.x);
+   var dG = Math.hypot(target.x-m.x, target.y-m.y);
+   var desiredDist = m.r + target.r + 6;
+   if(dG > desiredDist + 20){
+    m.vx += Math.cos(aG) * 520 * dt;
+    m.vy += Math.sin(aG) * 520 * dt;
+   }
+   var spG = Math.hypot(m.vx, m.vy) || 1;
+   if(spG > 260){ m.vx *= 260/spG; m.vy *= 260/spG; }
+   m.vx *= 0.9; m.vy *= 0.9;
+   m.x += m.vx*dt; m.y += m.vy*dt;
+   if(m.x < m.r){m.x=m.r;m.vx=Math.abs(m.vx);}
+   if(m.x > W-m.r){m.x=W-m.r;m.vx=-Math.abs(m.vx);}
+   if(m.y < m.r){m.y=m.r;m.vy=Math.abs(m.vy);}
+   if(m.y > H-m.r){m.y=H-m.r;m.vy=-Math.abs(m.vy);}
+   m.attackCd -= dt;
+   if(m.attackCd <= 0 && dG < m.r + target.r + 26){
+    m.attackCd = 0.7;
+    hurt(target, GOD_MINION_DMG);
+    burst(target.x, target.y, '#ffeaa7', 34, 2.2);
+    burst(target.x, target.y, '#fff5c0', 20, 2.4);
+    burst(target.x, target.y, '#ffffff', 12, 2.6);
+   }
+   return true;
+  }
 
   if(m.isBossMinion){
    var a = Math.atan2(target.y-m.y, target.x-m.x);
@@ -2579,6 +2876,14 @@ function cast(f,k){
   if(!target) return;
   f.say = 'explosiveDash'; f.sayT = 1;
   castExplosiveDash(f, k, target);
+  return;
+ }
+ /* ★ NEW: คอมโบ แสง + สัตว์เลี้ยง = เทพ */
+ if(combo === 'lightPet' && (s.id === 'light' || s.id === 'pet')){
+  if(f.lightPetCd > 0) return 1;
+  if(!target) return;
+  f.say = 'lightPet'; f.sayT = 1.2;
+  castLightPet(f, k, target, getSlotImgs(f,k,'cast'), getSlotImgs(f,k,'status'));
   return;
  }
 
@@ -2905,19 +3210,17 @@ function useWeapon(f,dt){
   });
  }
 }
-/* ★ Endless: บอสกระเด็นไปมาในขอบ ไม่พุ่งตามผู้เล่น */
+/* ★ Endless: บอสกระเด็นไปมาแบบบิลเลียด */
 function endlessBotAI(f, dt){
  if(f.dash>0 || f.bouncing || f.stunLeft>0 || f.lightStunLeft>0) return;
- /* ถ้าเป็นบอส -> เด้งไปมา ไม่ตามผู้เล่น */
  if(f.c && f.c._isBoss){
   var sp = Math.hypot(f.vx, f.vy) || 1;
-  var targetSpd = 320;
+  var targetSpd = 340;
   var ns = sp + (targetSpd - sp) * Math.min(1, dt * 1.5);
   f.vx *= ns / sp;
   f.vy *= ns / sp;
   return;
  }
- /* บอททั่วไป: ไล่ตามปกติ */
  var tgt = nearestEnemy(f);
  var desiredVx = 0, desiredVy = 0;
  if(tgt){
@@ -2956,6 +3259,8 @@ function updOnePlayer(f,dt){
  }
  if(f.dash<=0 && f.dashCombo && f.dashCombo !== 'bossDash') f.dashCombo = null;
  if(f.bossDashActive && f.dash <= 0) f.bossDashActive = false;
+ /* ★ ลดคูลดาวน์เทพ */
+ if(f.lightPetCd > 0) f.lightPetCd = Math.max(0, f.lightPetCd - dt);
 
  if(f.c._isBoss && mode==='boss' && !f.rageActive && f.hp <= f.maxHp*BOSS_RAGE_THRESHOLD){
   f.rageActive = true;
@@ -3138,6 +3443,8 @@ function updOnePlayer(f,dt){
 
  if(f.lightStunLeft <= 0){
   useWeapon(f,dt);
+  /* ★ admin CD multiplier */
+  var adminCdMult = f.c._adminCdMult || 1;
   if(f.c._isBoss && f.rageActive){
    f.rageCastTimer -= dt;
    if(f.rageCastTimer <= 0){
@@ -3155,7 +3462,12 @@ function updOnePlayer(f,dt){
      if(f.c._isBoss && f.suckActive){ f.cd[k]=0.4; }
      else {
       var cdOverride = cast(f,k);
-      f.cd[k] = (typeof cdOverride === 'number') ? cdOverride : f.c.skills[k].cd;
+      var finalCd = (typeof cdOverride === 'number') ? cdOverride : f.c.skills[k].cd;
+      /* ★ apply admin CD multiplier */
+      if(!f.c._isBoss && !f.c._isEndlessBot && adminCdMult !== 1){
+       finalCd *= adminCdMult;
+      }
+      f.cd[k] = finalCd;
      }
     }
    }
@@ -3368,11 +3680,12 @@ function makeEndlessBot(waveNum, variantIdx, isMiniBoss, isBoss){
  }
  if(isMiniBoss){
   var v = variantIdx % BOT_VARIANT_COLORS.length;
-  var skillPool = Object.keys(SK).filter(function(id){ return id!=='pet' && id!=='bossSummon'; });
+  var skillPool = Object.keys(SK).filter(function(id){ return id!=='pet' && id!=='bossSummon' && id!=='god'; });
   var s1 = skillPool[Math.floor(Math.random()*skillPool.length)];
   var s2 = skillPool[Math.floor(Math.random()*skillPool.length)];
   if(s1===s2) s2 = skillPool[(skillPool.indexOf(s1)+1)%skillPool.length];
-  var miniHp = 100 + waveNum * 12;
+  /* ★ ลด HP มินิบอส จาก 100 → 50 */
+  var miniHp = 50 + waveNum * 12;
   return {
    name: '⭐ มินิบอส W'+waveNum,
    frames: [endlessBotFrame(v, 0), endlessBotFrame(v, 1)],
@@ -3389,7 +3702,7 @@ function makeEndlessBot(waveNum, variantIdx, isMiniBoss, isBoss){
  }
  var v2 = variantIdx % BOT_VARIANT_COLORS.length;
  var hp = 30 + (waveNum-1) * 6;
- var pool = Object.keys(SK).filter(function(id){ return id!=='pet' && id!=='bossSummon'; });
+ var pool = Object.keys(SK).filter(function(id){ return id!=='pet' && id!=='bossSummon' && id!=='god'; });
  var sk1 = pool[Math.floor(Math.random()*pool.length)];
  var sk2 = pool[Math.floor(Math.random()*pool.length)];
  if(sk1===sk2) sk2 = pool[(pool.indexOf(sk1)+1)%pool.length];
@@ -3498,7 +3811,6 @@ function startNextWave(){
    p.maxHp = botChar._hp;
    p.r = botChar._r || 24;
    p.x = pos.x; p.y = pos.y;
-   /* ★ บอส: ให้เด้งไปในขอบทันที (ไม่พุ่งเข้าหาผู้เล่น) */
    if(botChar._isBoss){
     var ballAng = Math.random()*Math.PI*2;
     p.vx = Math.cos(ballAng) * 340;
@@ -4057,7 +4369,11 @@ function step(dt){
      if(Math.hypot(mn.x-p.x, mn.y-p.y) < mn.r + p.r){
       mn.hp -= 1; mn.flash = 0.2;
       burst(mn.x, mn.y, '#ffffff', 6, 1.3);
-      if(mn.hp <= 0){ mn.alive = false; burst(mn.x, mn.y, mn.color, 14, 1.5); }
+      if(mn.hp <= 0){
+       mn.alive = false;
+       burst(mn.x, mn.y, mn.color, 14, 1.5);
+       if(mn.isGodMinion && ownerM){ ownerM.lightPetCd = GOD_MINION_CD; }
+      }
       return false;
      }
     }
@@ -4147,7 +4463,8 @@ function ser(){
            m.skillCd?Math.round(m.skillCd*10)/10:0,
            m.skillActive?1:0,
            (typeof m.skillTarget==='number')?m.skillTarget:-1,
-           m.skillActiveTimer?Math.round(m.skillActiveTimer*10)/10:0];
+           m.skillActiveTimer?Math.round(m.skillActiveTimer*10)/10:0,
+           m.isGodMinion?1:0];
   }),
   gods:(B.gods||[]).map(function(g){
    return [Math.round(g.x), Math.round(g.y), g.owner,
@@ -4326,7 +4643,8 @@ function applyState(s){
    skillCd: +q[10]||1.5, skillActive: !!q[11],
    skillTarget: (typeof q[12]==='number')?q[12]:-1,
    skillActiveTimer: +q[13]||0, boltTick: 0,
-   color: '#ff88cc',
+   isGodMinion: !!q[14],
+   color: (!!q[14]) ? '#ffeaa7' : '#ff88cc',
    imgs: (ownerP && ownerP.c.minion && ownerP.c.minion.imgs) ? ownerP.c.minion.imgs : null
   };
  });
@@ -4441,7 +4759,6 @@ function drawDarkHole(z){
  ctx.fillStyle = g;
  ctx.beginPath(); ctx.arc(z.x, z.y, baseR*1.5, 0, 7); ctx.fill();
  ctx.restore();
-
  ctx.save();
  var coreR = baseR * 0.55;
  var cg = ctx.createRadialGradient(z.x, z.y, 2, z.x, z.y, coreR);
@@ -4452,7 +4769,6 @@ function drawDarkHole(z){
  ctx.fillStyle = cg;
  ctx.beginPath(); ctx.arc(z.x, z.y, coreR, 0, 7); ctx.fill();
  ctx.restore();
-
  ctx.save();
  ctx.globalCompositeOperation='lighter';
  for(var i=0;i<20;i++){
@@ -4469,7 +4785,6 @@ function drawDarkHole(z){
   ctx.fill();
  }
  ctx.restore();
-
  ctx.save();
  ctx.globalAlpha = fade;
  var pulse = 1 + Math.sin(now/150)*0.08;
@@ -4548,7 +4863,6 @@ function drawLightningField(z){
  ctx.fillStyle = g;
  ctx.beginPath();ctx.arc(z.x, z.y, drawR, 0, 7);ctx.fill();
  ctx.restore();
-
  ctx.save();
  ctx.globalAlpha = fade * 0.9;
  ctx.lineCap = 'round';
@@ -4576,7 +4890,6 @@ function drawLightningField(z){
   ctx.stroke();
  }
  ctx.restore();
-
  ctx.save();
  ctx.globalAlpha = fade * 0.6;
  var pulse = 1 + Math.sin(now/180)*0.05;
@@ -4807,6 +5120,48 @@ function drawMinion(m){
  if(!m.alive) return;
  var rr = m.r;
  var im = m.imgs && m.imgs[0];
+ /* ★ เทพ - วาดพิเศษ */
+ if(m.isGodMinion){
+  var tnow = performance.now();
+  ctx.save();
+  /* aura */
+  var aPulse = 1 + Math.sin(tnow/120)*0.15;
+  var aura = ctx.createRadialGradient(m.x, m.y, 2, m.x, m.y, rr*2*aPulse);
+  aura.addColorStop(0, 'rgba(255,245,192,0.75)');
+  aura.addColorStop(0.5, 'rgba(255,220,100,0.35)');
+  aura.addColorStop(1, 'rgba(255,200,50,0)');
+  ctx.fillStyle = aura;
+  ctx.beginPath(); ctx.arc(m.x, m.y, rr*2*aPulse, 0, 7); ctx.fill();
+  /* body */
+  ctx.fillStyle = '#fff5c0';
+  ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 22;
+  ctx.beginPath(); ctx.arc(m.x, m.y, rr, 0, 7); ctx.fill();
+  ctx.shadowBlur = 0;
+  /* face */
+  ctx.fillStyle = '#3a2a00';
+  ctx.beginPath(); ctx.arc(m.x - rr*0.28, m.y - rr*0.15, rr*0.11, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.arc(m.x + rr*0.28, m.y - rr*0.15, rr*0.11, 0, 7); ctx.fill();
+  /* halo */
+  ctx.strokeStyle = '#ffd166'; ctx.lineWidth = 2.5;
+  ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 16;
+  ctx.beginPath();
+  ctx.ellipse(m.x, m.y - rr*1.15, rr*0.55, rr*0.16, 0, 0, 7);
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+  /* HP bar */
+  var hpPct = Math.max(0, Math.min(1, m.hp/m.maxHp));
+  var barW = rr*2.4;
+  ctx.fillStyle = 'rgba(0,0,0,0.6)';
+  ctx.fillRect(m.x-barW/2-1, m.y-rr-10, barW+2, 5);
+  ctx.fillStyle = '#ffd166';
+  ctx.fillRect(m.x-barW/2, m.y-rr-9, barW*hpPct, 3);
+  if(m.flash > 0){
+   ctx.fillStyle = 'rgba(255,255,255,'+(Math.min(1,m.flash*4))+')';
+   ctx.beginPath();ctx.arc(m.x,m.y,rr,0,7);ctx.fill();
+  }
+  ctx.restore();
+  return;
+ }
  if(m.isBossMinion){
   var auraPulse = 1 + Math.sin(performance.now()/150)*0.15;
   ctx.save();
@@ -4842,12 +5197,12 @@ function drawMinion(m){
  ctx.beginPath();ctx.arc(m.x,m.y,rr,0,7);ctx.stroke();
  ctx.shadowBlur = 0;
  if(m.maxHp > 1){
-  var hpPct = Math.max(0, Math.min(1, m.hp/m.maxHp));
-  var barW = rr*2.2;
+  var hpPct2 = Math.max(0, Math.min(1, m.hp/m.maxHp));
+  var barW2 = rr*2.2;
   ctx.fillStyle = 'rgba(0,0,0,0.6)';
-  ctx.fillRect(m.x-barW/2-1, m.y-rr-9, barW+2, 5);
+  ctx.fillRect(m.x-barW2/2-1, m.y-rr-9, barW2+2, 5);
   ctx.fillStyle = m.isBossMinion ? '#ff2244' : '#ff5577';
-  ctx.fillRect(m.x-barW/2, m.y-rr-8, barW*hpPct, 3);
+  ctx.fillRect(m.x-barW2/2, m.y-rr-8, barW2*hpPct2, 3);
  }
  if(m.flash > 0){
   ctx.fillStyle = 'rgba(255,255,255,'+(Math.min(1,m.flash*4))+')';
@@ -5281,7 +5636,6 @@ function drawTimeStopOverlay(){
  g.addColorStop(1, 'rgba(127,220,255,0.22)');
  ctx.fillStyle = g;
  ctx.fillRect(0, 0, W, H);
-
  for(var i=0;i<3;i++){
   var rr = W*0.28 + i*40 + Math.sin(now/200 + i)*8;
   ctx.globalAlpha = fade * (0.35 - i*0.08);
@@ -5292,7 +5646,6 @@ function drawTimeStopOverlay(){
   ctx.beginPath(); ctx.arc(W/2, H/2, rr, 0, 7); ctx.stroke();
   ctx.setLineDash([]);
  }
-
  ctx.globalAlpha = fade;
  ctx.strokeStyle = '#7fdcff';
  ctx.lineWidth = 5;
@@ -5306,7 +5659,6 @@ function drawTimeStopOverlay(){
  ctx.lineTo(W/2 + 12, 90);
  ctx.stroke();
  ctx.shadowBlur = 0;
-
  ctx.globalAlpha = fade * 0.9;
  ctx.fillStyle = '#7fdcff';
  ctx.font = 'bold 26px system-ui,sans-serif';
@@ -5315,14 +5667,12 @@ function drawTimeStopOverlay(){
  ctx.shadowBlur = 18;
  ctx.fillText('⏱ TIME STOP', W/2, 48);
  ctx.shadowBlur = 0;
-
  ctx.fillStyle = '#ffffff';
  ctx.font = 'bold 20px system-ui,sans-serif';
  ctx.shadowColor = '#8a4aff';
  ctx.shadowBlur = 14;
  ctx.fillText(B.timeStop.left.toFixed(1) + ' วิ', W/2, H - 30);
  ctx.shadowBlur = 0;
-
  ctx.globalAlpha = fade * 0.06;
  ctx.fillStyle = '#ffffff';
  for(var s=0; s<H; s+=6){
@@ -5355,6 +5705,26 @@ function drawF(f){
   rAG.addColorStop(1, 'rgba(255,30,60,0)');
   ctx.fillStyle = rAG;
   ctx.beginPath(); ctx.arc(f.x, f.y, rr*2.6*ragePulse, 0, 7); ctx.fill();
+  ctx.restore();
+ }
+
+ /* ★ admin aura */
+ if(f.c._adminHp || f.c._adminAllSkills){
+  ctx.save();
+  ctx.globalAlpha = 0.5 + Math.sin(performance.now()/180)*0.15;
+  var aAG = ctx.createRadialGradient(f.x, f.y, rr*0.8, f.x, f.y, rr*2);
+  aAG.addColorStop(0, 'rgba(255,209,102,0)');
+  aAG.addColorStop(0.6, 'rgba(255,209,102,0.35)');
+  aAG.addColorStop(1, 'rgba(255,209,102,0)');
+  ctx.fillStyle = aAG;
+  ctx.beginPath(); ctx.arc(f.x, f.y, rr*2, 0, 7); ctx.fill();
+  ctx.strokeStyle = '#ffd166';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6,4]);
+  ctx.lineDashOffset = -performance.now()/80;
+  ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 18;
+  ctx.beginPath(); ctx.arc(f.x, f.y, rr + 7, 0, 7); ctx.stroke();
+  ctx.setLineDash([]);
   ctx.restore();
  }
 
@@ -5602,6 +5972,7 @@ function loop(now){
    if(f.lightLeft>0)f.lightLeft=Math.max(0,f.lightLeft-dt);
    if(f.lightStunLeft>0)f.lightStunLeft=Math.max(0,f.lightStunLeft-dt);
    if(f.burnLeft>0){f.burnLeft-=dt;}
+   if(f.lightPetCd>0) f.lightPetCd = Math.max(0, f.lightPetCd - dt);
   });
   if(B.minions){
    B.minions.forEach(function(m){
@@ -5857,7 +6228,7 @@ function bossFrameByType(type, k){
  return c.toDataURL('image/png');
 }
 function makeBot(){
- var ids=Object.keys(SK).filter(function(id){return id!=='pet' && id!=='bossSummon';}).sort(function(){return Math.random()-.5;}).slice(0,2);
+ var ids=Object.keys(SK).filter(function(id){return id!=='pet' && id!=='bossSummon' && id!=='god';}).sort(function(){return Math.random()-.5;}).slice(0,2);
  return {name:'บอท',frames:[botFrame(0),botFrame(1)],wins:0,weapon:'none',
   skills:ids.map(function(id){
    var d=defSkill(id);
@@ -5875,7 +6246,7 @@ function makeBoss(type){
  if(cfg.skills && cfg.skills.length){
   ids = cfg.skills.slice();
  } else {
-  var baseIds = Object.keys(SK).filter(function(id){ return id!=='pet' && id!=='bossSummon'; })
+  var baseIds = Object.keys(SK).filter(function(id){ return id!=='pet' && id!=='bossSummon' && id!=='god'; })
     .sort(function(){return Math.random()-.5;}).slice(0,2);
   ids = baseIds.concat(['bossSummon']);
  }
@@ -5972,9 +6343,7 @@ function createOnlineRoom(mode, size, bossType){
  if(mode==='boss'){
   msg.boss = strip(makeBoss(bossType||'mixed'));
  }
- ensureWs().then(function(){
-  wsSend(msg);
- }).catch(function(){ toast('เชื่อมต่อไม่ได้'); });
+ ensureWs().then(function(){ wsSend(msg); }).catch(function(){ toast('เชื่อมต่อไม่ได้'); });
 }
 
 $('suckBtn').addEventListener('pointerdown', function(e){
@@ -6028,7 +6397,7 @@ function updateSuckUI(){
 var LUCKY_POOL = null;
 function getLuckyPool(){
  if(LUCKY_POOL) return LUCKY_POOL;
- var ids = Object.keys(SK).filter(function(id){ return id!=='pet' && id!=='bossSummon'; });
+ var ids = Object.keys(SK).filter(function(id){ return id!=='pet' && id!=='bossSummon' && id!=='god'; });
  LUCKY_POOL = ids.concat(['hp']);
  return LUCKY_POOL;
 }
@@ -6118,7 +6487,6 @@ loadChars().then(function(){ syncWinsToServer(); });
 // ---------------- SERVER ----------------
 const clients = new Set();
 
-/* ★ Accounts (name -> { name, keypass, avatar, wins }) */
 const accounts = new Map();
 const ACC_FILE = path.join(__dirname, 'accounts.json');
 function loadAcc() {
@@ -6148,7 +6516,6 @@ function saveAcc() {
 }
 loadAcc();
 
-/* ★ Rooms */
 const rooms = new Map();
 let roomIdCounter = 0;
 function makeRoomId() {
@@ -6189,7 +6556,6 @@ function removeFromRoom(c) {
   broadcastRooms();
 }
 
-/* ★ Leaderboard (from accounts) */
 function leaderboardList() {
   return [...accounts.values()]
     .filter(a => a.wins > 0)
@@ -6355,7 +6721,6 @@ const server = http.createServer((req, res) => {
         if (keypass.length !== 6) { res.end(JSON.stringify({ ok: false, msg: 'รหัสต้อง 6 ตัว' })); return; }
         let acc = accounts.get(name);
         if (acc) {
-          /* login */
           if (acc.keypass && acc.keypass !== keypass) {
             res.end(JSON.stringify({ ok: false, msg: 'ชื่อนี้ถูกใช้แล้วหรือรหัสไม่ถูก' }));
             return;
@@ -6365,7 +6730,6 @@ const server = http.createServer((req, res) => {
           saveAcc();
           res.end(JSON.stringify({ ok: true, name: acc.name, wins: acc.wins || 0, avatar: acc.avatar || '' }));
         } else {
-          /* register */
           acc = { name, keypass, avatar, wins: 0 };
           accounts.set(name, acc);
           saveAcc();
